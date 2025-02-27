@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All List :</title>
+  </head>
+  <body>
+    <div>
+      <h3>All List :</h3>
+      <form action="/listing/new">
+        <button>Want to Add</button>
+      </form>
+      <ul>
+        <% for(let data of datas) { %>
+        <a href="/listing/<%= data._id %>">
+        <li><%= data.title %></li>
+        </a>
+        <% } %>
+      </ul>
+    </div>
+  </body>
+</html>
