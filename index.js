@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const Listing = require("./models/listing");
 const Path = require("path");
+const methodOverride = require("method-override");
 
 //*main function to make a connection with database
 const main = async() => {
@@ -22,6 +23,7 @@ main()
 app.set("view engine", "ejs");
 app.set("views", Path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"))
 
 
 //*a Routes
@@ -49,6 +51,23 @@ app.get("/listing/:id" , async (req, res) => {
     let data = await Listing.findById(id);
     res.render("listings/show.ejs", { data });
 });
+
+
+//update route
+app.get("/listing/:id/edit", async (req,res) => {
+    let { id } = req.params;
+    let data = await Listing.findById(id);
+    res.render("listings/edit.ejs", { data });
+});
+
+//upadate route put request
+app.put("/listing/:id", async (req, res) => {
+    let { id } = req.params;
+    await Listing.findByIdAndUpdate(id, req.body);
+    res.redirect(`/listing/${id}`);
+});
+
+//delete route
 
 
 

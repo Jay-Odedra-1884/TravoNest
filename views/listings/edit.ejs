@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TraveNest</title>
+</head>
+<body>
+   <div>
+    <form method="post" action="/listing/<%= data._id %>?_method=PUT">
+        <label>Title : 
+        <input type="text" name="title" value=<%= data.title %> required>
+        </label>
+        <label>Describe Here :
+        <textarea name="description"><%= data.description %></textarea>
+        </label>
+        <label>What do you thinnk about Price : 
+        <input type="number" name="price" value=<%= data.price %> required>
+        </label>
+        <label>Location :
+        <input type="text" name="location" value=<%= data.location %> required>
+        </label>
+        <label>
+            Add Country :
+            <select name="country" id="country">
+                <option value="">Select a country</option>
+                <% 
+                    let countries = [
+                        "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", 
+                        "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", 
+                        "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", 
+                        "Cameroon", "Canada", "Cape Verde", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", 
+                        "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", 
+                        "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", 
+                        "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Guatemala", "Guinea", "Guyana", "Haiti", "Honduras", 
+                        "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", 
+                        "Kenya", "South Korea", "Kuwait", "Laos", "Latvia", "Lebanon", "Libya", "Lithuania", "Luxembourg", "Madagascar", "Malaysia", 
+                        "Maldives", "Mali", "Malta", "Mexico", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", 
+                        "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Nigeria", "Norway", "Oman", "Pakistan", "Palestine", "Panama", 
+                        "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Saudi Arabia", "Senegal", "Serbia", 
+                        "Singapore", "Slovakia", "South Africa", "Spain", "Sri Lanka", "Sweden", "Switzerland", "Thailand", "Tunisia", "Turkey", 
+                        "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Vietnam", "Yemen", "Zimbabwe"
+                    ]; 
+                %>
+                <% countries.forEach(country => { %>
+                    <option value="<%= country %>" <%= data.country === country ? "selected" : "" %>><%= country %></option>
+                <% }); %>
+            </select>            
+        </label>
+        <button type="submit">Add +</button>
+    </form>
+   </div>
+</body>
+</html>
