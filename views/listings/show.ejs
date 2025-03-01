@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List details</title>
+    <title>TravoNest</title>
 </head>
 <body>
     <div>
@@ -14,6 +14,9 @@
         <p><%= data.country %></p>
         <br><br>
         <a href="/listing/<%= data._id %>/edit">Edit Details</a>
+        <form method="post" action="/listing/<%= data._id %>?_method=DELETE">
+            <button>Delete</button>
+        </form>
     </div>
 </body>
 </html>
