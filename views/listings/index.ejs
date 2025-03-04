@@ -1,23 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TravoNest</title>
-  </head>
+<% layout('layouts/boilerplate') -%>
   <body>
     <div>
       <h3>All List :</h3>
       <form action="/listing/new">
         <button>Want to Add</button>
       </form>
-      <ul>
-        <% for(let data of datas) { %>
-        <a href="/listing/<%= data._id %>">
-        <li><%= data.title %></li>
-        </a>
-        <% } %>
-      </ul>
+        <div class="row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-1">
+          <% for(let data of datas) { %>
+            <a href="/listing/<%= data._id %>" class="card-link">
+                <div class="card" style="width: 18rem;">
+                  <img src=<%= data.image %> class="card-img-top" alt="Opps no image">
+                  <div class="card-img-overlay"></div>
+                  <div class="card-body">
+                    <p class="card-text"><i><b><%= data.title %></b></i></p>
+                    <p class="card-text">&#8377;<%= data.price.toLocaleString("en-IN") %> / Night</p>
+                  </div>
+              </div>
+            </a>
+            <% } %>
+        </div>
     </div>
   </body>
-</html>

@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const Listing = require("./models/listing");
 const Path = require("path");
 const methodOverride = require("method-override");
+const engine = require("ejs-mate");
 
 //*main function to make a connection with database
 const main = async() => {
@@ -13,17 +14,19 @@ const main = async() => {
 //calling main function
 main()
 .then(() => {
-    console.log("Database connection successful ✅");
+    console.log("👉 Database connection successful 👍 ✅");
 })
 .catch((e) => {
-    console.log("Error ⛔: In DataBase connection");
+    console.log("👉 Error : In DataBase connection 👎 ⛔");
     
 });
 
+app.engine('ejs', engine);
 app.set("view engine", "ejs");
 app.set("views", Path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride("_method"))
+app.use(methodOverride("_method"));
+app.use(express.static(Path.join(__dirname, "/public")));
 
 
 //*a Routes
