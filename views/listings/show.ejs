@@ -1,15 +1,22 @@
 <% layout('layouts/boilerplate') -%>
-<body>
-    <div>
-        <p><b><%= data.title %></b></p>
-        <p><%= data.description %></p>
-        <p>&#8377;<%= data.price.toLocaleString("en-IN") %></p>
-        <p><%= data.location %></p>
-        <p><%= data.country %></p>
-        <br><br>
-        <a href="/listing/<%= data._id %>/edit">Edit Details</a>
-        <form method="post" action="/listing/<%= data._id %>?_method=DELETE">
-            <button>Delete</button>
-        </form>
+<div class="show-main-cimtainer">
+  <div class="listing-details-container">
+    <div class="listing-image">
+      <img src="<%= data.image %>" alt="Listing Image" class="listing-img">
     </div>
-</body>
+
+    <div class="listing-info">
+      <h1 class="listing-title"><%= data.title %></h1>
+      <p class="listing-location"><%= data.location %>, <%= data.country %></p>
+      <p class="listing-description"><%= data.description %></p>
+      <p class="listing-price">&#8377;<%= data.price.toLocaleString("en-IN") %></p>
+
+      <div class="listing-actions">
+        <a href="/listing/<%= data._id %>/edit" class="edit-button">Edit Details</a>
+        <form method="post" action="/listing/<%= data._id %>?_method=DELETE" class="delete-form">
+          <button type="submit" class="delete-button">Delete Listing</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

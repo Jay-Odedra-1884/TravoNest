@@ -80,10 +80,11 @@ app.delete("/listing/:id", async (req, res) => {
 
 //add new post request
 app.post("/addnew", async (req, res) => {
-    let { title, description, price, location, country } = req.body;
+    let { title, description, image, price, location, country } = req.body;
     let newData = new Listing({
         title: title,
         description: description,
+        image: image,
         price: price,
         location: location,
         country: country,
