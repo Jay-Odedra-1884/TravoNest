@@ -5,6 +5,9 @@ const Listing = require("./models/listing");
 const Path = require("path");
 const methodOverride = require("method-override");
 const engine = require("ejs-mate");
+const wrapAsync = require("./utils/wrapAsync");
+const ExpressError = require("./utils/ExpressError");
+const { listingSchema } = require("./schema");
 
 //*main function to make a connection with database
 const main = async() => {
@@ -27,6 +30,7 @@ app.set("views", Path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(Path.join(__dirname, "/public")));
+app.use(express.json());
 
 
 //*a Routes
@@ -37,10 +41,10 @@ app.get("/", (req, res) => {
 
 
 //all list route
-app.get("/listing", async (req, res) => {
+app.get("/listing", wrapAsync(async (req, res) => {
     const listingData = await Listing.find();
     res.render("listings/index.ejs", { datas:listingData });
-});
+}));
 
 //*Placeing the new route before the ID route because if it's placed after, it will treat 'new' as an ID
 //to add new 
@@ -49,37 +53,48 @@ app.get("/listing/new", (req, res) => {
 });
 
 //list detail route 
-app.get("/listing/:id" , async (req, res) => {
+app.get("/listing/:id" , wrapAsync(async (req, res) => {
     let { id } = req.params;
     let data = await Listing.findById(id);
     res.render("listings/show.ejs", { data });
-});
+}));
 
 
 //update route
-app.get("/listing/:id/edit", async (req,res) => {
+app.get("/listing/:id/edit", wrapAsync(async (req,res) => {
     let { id } = req.params;
     let data = await Listing.findById(id);
     res.render("listings/edit.ejs", { data });
-});
+}));
 
 //upadate route put request
-app.put("/listing/:id", async (req, res) => {
+app.put("/listing/:id", wrapAsync(async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndUpdate(id, req.body);
     res.redirect(`/listing/${id}`);
-});
+}));
 
 //delete route
-app.delete("/listing/:id", async (req, res) => {
+app.delete("/listing/:id", wrapAsync(async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndDelete(id);
     res.redirect("/listing");
-})
+}));
 
 
 //add new post request
-app.post("/addnew", async (req, res) => {
+app.post("/addnew", wrapAsync(async (req, res) => {
+
+    console.log(req.body);
+    
+    console.log("--------------------------at first place 1st");
+    let result = listingSchema.validate(req.body);
+    console.log("--------------------------at first place 2st");
+    console.log(result);
+
+    if(result.error) {
+        throw new ExpressError(400, result.error);
+    }
     let { title, description, image, price, location, country } = req.body;
     let newData = new Listing({
         title: title,
@@ -91,21 +106,24 @@ app.post("/addnew", async (req, res) => {
     });
     await newData.save();
     res.redirect("/listing");
-});
+}));
+
+//to catch all unmatch route
+app.all("*", (req, res, next) => {
+    console.log(req.url);
+    next(new ExpressError(404, "OPPS! Page not found!"));
+})
+
 
 //teting route
-app.get("/testing", async (req, res) => {
-    // const newListing = new Listing({
-    //     title:"Full house",
-    //     description:"A house coverded with nature",
-    //     price:2399,
-    //     location:"porbandar",
-    //     country:"India"
-    // });
+// app.get("/testing", wrapAsync(async (req, res) => {
+// }));
 
-    // await newListing.save();
-    res.send("data inserted successful....");
-})
+app.use((err, req, res, next) => {
+    let {statusCode, message } = err;
+    res.status(statusCode).render("error.ejs", { message });
+    next(err);
+});
 
 app.listen(8080, () => {
     console.log("Server startes at port : 8080 ");

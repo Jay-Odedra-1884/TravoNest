@@ -9,7 +9,7 @@
                   <div class="card-img-overlay"></div>
                   <div class="card-body">
                     <p class="card-text"><i><b><%= data.title %></b></i></p>
-                    <p class="card-text">&#8377;<%= data.price.toLocaleString("en-IN") %> / Night</p>
+                    <p class="card-text">&#8377;<%=data.price ? data.price.toLocaleString("en-IN") : null %> / Night</p>
                   </div>
               </div>
             </a>
