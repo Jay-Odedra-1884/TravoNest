@@ -32,6 +32,17 @@ app.use(methodOverride("_method"));
 app.use(express.static(Path.join(__dirname, "/public")));
 app.use(express.json());
 
+//listing validation middlewere
+const validateListing = (req, res, next) => {
+    let {error} = listingSchema.validate(req.body);
+
+    if(error) {
+        throw new ExpressError(400, error);
+    } else {
+        next();
+    }
+}
+
 
 //*a Routes
 //landing route
@@ -68,7 +79,7 @@ app.get("/listing/:id/edit", wrapAsync(async (req,res) => {
 }));
 
 //upadate route put request
-app.put("/listing/:id", wrapAsync(async (req, res) => {
+app.put("/listing/:id", validateListing, wrapAsync(async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndUpdate(id, req.body);
     res.redirect(`/listing/${id}`);
@@ -83,18 +94,7 @@ app.delete("/listing/:id", wrapAsync(async (req, res) => {
 
 
 //add new post request
-app.post("/addnew", wrapAsync(async (req, res) => {
-
-    console.log(req.body);
-    
-    console.log("--------------------------at first place 1st");
-    let result = listingSchema.validate(req.body);
-    console.log("--------------------------at first place 2st");
-    console.log(result);
-
-    if(result.error) {
-        throw new ExpressError(400, result.error);
-    }
+app.post("/addnew", validateListing, wrapAsync(async (req, res) => {
     let { title, description, image, price, location, country } = req.body;
     let newData = new Listing({
         title: title,
