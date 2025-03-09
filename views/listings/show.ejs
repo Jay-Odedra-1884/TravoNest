@@ -31,7 +31,7 @@
       </div>
       <div class="row">
         <hr />
-        <h5>Reviews:</h5>
+        <h5><b>Add Reviews</b></h5>
         <div class="review-form-container">
           <form action="/listing/<%= data._id %>/reviews" method="post">
             <div>
@@ -56,11 +56,17 @@
             </div>
             <button type="submit" class="btn btn-outline-dark mt-3">Comment</button>
           </form>
-          <div>
+          <hr>
+          <div class="row mt-3">
+            <p><b>All Reviews</b></p>
             <% for(let review of data.reviews) {%>
-                <p><%= review.rating %></p>
-                <p><%= review.comment %></p>
-                <br>
+                <div class="card col-5 ms-3 review-card mb-3">
+                  <div class="review-card-top mt-2">
+                    <p class="col-6"><b><i>UserName</i></b></p>
+                    <p class="review-card-rating"><%= review.rating %> <i class="fa-solid fa-star"></i></p>
+                  </div>
+                  <p class="review-card-text"><%= review.comment %></p>
+                </div>
             <% } %>
           </div>
         </div>

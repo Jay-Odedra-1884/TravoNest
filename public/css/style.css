@@ -60,7 +60,7 @@ body {
 
 /* Card */
 
-.card {
+.listing-card {
   border: none;
   border-radius: 1rem;
   margin-bottom: 2rem;
@@ -251,4 +251,20 @@ body {
     width: 100%;
     text-align: center;
   }
+}
+
+/* reviews */
+
+.review-card {
+  background-color: transparent;
+}
+
+.review-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-card-rating {
+  color: orange
 }
