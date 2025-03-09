@@ -9,7 +9,7 @@
           id="title"
           class="form-control"
           type="text"
-          name="title"
+          name="listing[title]"
           placeholder="what is a title for...."
           required
         />
@@ -19,7 +19,7 @@
         <textarea
           id="description"
           class="form-control"
-          name="description"
+          name="listing[description]"
           placeholder="Add description here..."
           required
         ></textarea>
@@ -30,7 +30,7 @@
           id="price"
           class="form-control"
           type="text"
-          name="image"
+          name="listing[image]"
           placeholder="Paste Image URL here"
         />
       </div>
@@ -42,7 +42,7 @@
           id="price"
           class="form-control"
           type="number"
-          name="price"
+          name="listing[price]"
           placeholder="Price"
           required
         />
@@ -50,7 +50,7 @@
       <div class="row">
         <div class="mb-3 col-4">
           <label for="country" class="form-label"> Add Country : </label>
-          <select class="form-select" name="country" id="country" required>
+          <select class="form-select" name="listing[country]" id="country" required>
             <option value="">Select a country</option>
             <option value="Afghanistan">Afghanistan</option>
             <option value="Albania">Albania</option>
@@ -205,7 +205,7 @@
             id="location"
             class="form-control"
             type="text"
-            name="location"
+            name="listing[location]"
             placeholder="Add location"
             required
           />

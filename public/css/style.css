@@ -62,7 +62,10 @@ body {
 
 .card {
   border: none;
+  border-radius: 1rem;
   margin-bottom: 2rem;
+  background-color: #faf7f7;
+  /* padding: 10px; */
 }
 
 .card-link {
@@ -72,7 +75,9 @@ body {
 .card-img-top {
   width: 100%;
   height: 18rem;
-  border-radius: 1.2rem;
+  border-radius: 1rem;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
   object-fit: cover;
 }
 
@@ -83,7 +88,7 @@ body {
 }
 
 .card-body {
-  padding: 0;
+  padding: 10px;
 }
 
 .card-img-overlay:hover {

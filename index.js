@@ -7,7 +7,8 @@ const methodOverride = require("method-override");
 const engine = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync");
 const ExpressError = require("./utils/ExpressError");
-const { listingSchema } = require("./schema");
+const { listingSchema, reviewSchema } = require("./schema");
+const Review = require("./models/review");
 
 //*main function to make a connection with database
 const main = async() => {
@@ -43,11 +44,22 @@ const validateListing = (req, res, next) => {
     }
 }
 
+//server side reviews validation middleware
+const validateReview = (req, res, next) => {
+    let {error} = reviewSchema.validate(req.body);
+
+    if(error) {
+        throw new ExpressError(400, error);
+    } else {
+        next();
+    }
+}
+
 
 //*a Routes
 //landing route
 app.get("/", (req, res) => {
-    res.send("Testing....");
+    res.redirect("/listing")
 });
 
 
@@ -66,7 +78,7 @@ app.get("/listing/new", (req, res) => {
 //list detail route 
 app.get("/listing/:id" , wrapAsync(async (req, res) => {
     let { id } = req.params;
-    let data = await Listing.findById(id);
+    let data = await Listing.findById(id).populate("reviews");
     res.render("listings/show.ejs", { data });
 }));
 
@@ -92,18 +104,24 @@ app.delete("/listing/:id", wrapAsync(async (req, res) => {
     res.redirect("/listing");
 }));
 
+//*reviews
+//review post route
+
+app.post("/listing/:id/reviews", validateReview, wrapAsync(async (req, res) => {
+    let listing = await Listing.findById(req.params.id);
+    let review = new Review(req.body.review);
+
+    listing.reviews.push(review);
+
+    await review.save();
+    await listing.save();
+    res.redirect(`/listing/${listing._id}`);
+}));
+
 
 //add new post request
 app.post("/addnew", validateListing, wrapAsync(async (req, res) => {
-    let { title, description, image, price, location, country } = req.body;
-    let newData = new Listing({
-        title: title,
-        description: description,
-        image: image,
-        price: price,
-        location: location,
-        country: country,
-    });
+    let newData = new Listing(req.body.listing);
     await newData.save();
     res.redirect("/listing");
 }));
@@ -124,6 +142,9 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render("error.ejs", { message });
     next(err);
 });
+
+
+//!server port-------||
 
 app.listen(8080, () => {
     console.log("Server startes at port : 8080 ");
