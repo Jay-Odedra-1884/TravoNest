@@ -6,34 +6,34 @@
         <div class="mb-3">
             <label for="title" class="form-label">Title : 
             </label>
-            <input id="title" class="form-control" type="text" name="title" value=<%= data.title %> required>
+            <input id="title" class="form-control" type="text" name="listing[title]" value="<%= data.title %>" required>
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Describe Here :
             </label>
-            <textarea id="description" class="form-control" name="description"><%= data.description %></textarea>
+            <textarea id="description" class="form-control" name="listing[description]"><%= data.description %></textarea>
         </div>
         <div class="mb-3">
             <label for="image" class="form-label">Image URL :
             </label>
-            <input id="image" class="form-control" type="text" name="image" value=<%= data.image %> required>
+            <input id="image" class="form-control" type="text" name="listing[image]" value="<%= data.image %>" required>
         </div>
         <div class="mb-3">
             <label for="price" class="form-label">What do you thinnk about Price : 
             </label>
-            <input id="price" class="form-control" type="number" name="price" value=<%= data.price %> required>
+            <input id="price" class="form-control" type="number" name="listing[price]" value="<%= data.price %>" required>
         </div>
         <div class="row">
             <div class="mb-3 col-4">
                 <label for="location" class="form-label">Location :
                 </label>
-                <input id="location" class="form-control" type="text" name="location" value=<%= data.location %> required>
+                <input id="location" class="form-control" type="text" name="listing[location]" value="<%= data.location %>" required>
             </div>
             <div class="mb-3 col-8">
                 <label for="country" class="form-label">
                     Add Country :            
                 </label>
-                <select class="form-control" name="country" id="country">
+                <select class="form-control" name="listing[country]" id="country">
                     <option value="">Select a country</option>
                     <% 
                         let countries = [
