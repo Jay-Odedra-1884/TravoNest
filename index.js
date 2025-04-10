@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const listingRoute = require("./routes/listing")
 const reviewRoute = require("./routes/reviews");
+const userRoute = require("./routes/user");
 const mongoose = require("mongoose");
 const Path = require("path");
 const methodOverride = require("method-override");
@@ -9,6 +10,9 @@ const engine = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError");
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user");
 
 
 const sessionOptions = {
@@ -24,6 +28,14 @@ const sessionOptions = {
 
 app.use(session(sessionOptions));
 app.use(flash());
+
+//for passport (configuring statergy)
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
@@ -65,6 +77,10 @@ app.use("/listing", listingRoute);
 
 //*for Reviews
 app.use("/listing/:id/reviews", reviewRoute);
+
+
+//*for user
+app.use("/", userRoute);
 
 //to catch all unmatch route
 app.all("*", (req, res, next) => {

@@ -4,6 +4,8 @@ const Listing = require("../models/listing")
 const wrapAsync = require("../utils/wrapAsync");
 const ExpressError = require("../utils/ExpressError");
 const { listingSchema } = require("../schema");
+const { isLoggedIn } = require("../middleware");
+
 
 //listing validation middlewere
 const validateListing = (req, res, next) => {
@@ -24,12 +26,12 @@ router.get("/", wrapAsync(async (req, res) => {
 
 //*Placeing the new route before the ID route because if it's placed after, it will treat 'new' as an ID
 //to add new 
-router.get("/new", (req, res) => {
+router.get("/new", isLoggedIn, (req, res) => {
     res.render("listings/addNewForm.ejs");
 });
 
 //add new post request
-router.post("/addnew", validateListing, wrapAsync(async (req, res) => {
+router.post("/addnew",  validateListing, wrapAsync(async (req, res) => {
     let newData = new Listing(req.body.listing);
     await newData.save();
     req.flash("success", "New listing added successfully!");
