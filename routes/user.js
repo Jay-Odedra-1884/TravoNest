@@ -30,6 +30,16 @@ router.get("/login", (req, res) => {
 router.post("/login",passport.authenticate("local", {failureRedirect: "/login", failureFlash: true}) , async(req, res) => {
     req.flash("success", "Welcome back to Travonest");
     res.redirect("/listing");
+});
+
+router.get("/logout", (req, res) => {
+    req.logout((err) => {
+        if(err) {
+            return next(err);
+        }
+        req.flash("success", "You logged out!");
+        res.redirect("/listing");
+    })
 })
 
 module.exports = router
