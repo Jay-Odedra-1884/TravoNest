@@ -161,6 +161,12 @@ body {
   font-size: 2rem;
   margin: 0;
   color: #222;
+  line-height: 1.9rem;
+}
+
+.listing-title-owner {
+  color: gray;
+  font-size: large;
 }
 
 .listing-location {

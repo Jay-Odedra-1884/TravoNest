@@ -41,7 +41,7 @@ router.post("/addnew",  validateListing, wrapAsync(async (req, res) => {
 //list detail route 
 router.get("/:id" , wrapAsync(async (req, res) => {
     let { id } = req.params;
-    let data = await Listing.findById(id).populate("reviews");
+    let data = await Listing.findById(id).populate("reviews").populate("owner");
     if(!data) {
         req.flash("error", "Listing not found!");
         return res.redirect("/listing");
@@ -50,7 +50,7 @@ router.get("/:id" , wrapAsync(async (req, res) => {
 }));
 
 //update route
-router.get("/:id/edit", wrapAsync(async (req,res) => {
+router.get("/:id/edit", isLoggedIn,  wrapAsync(async (req,res) => {
     let { id } = req.params;
     let data = await Listing.findById(id);
     if(!data) {
@@ -69,7 +69,7 @@ router.put("/:id", validateListing, wrapAsync(async (req, res) => {
 }));
 
 //delete route
-router.delete("/:id", wrapAsync(async (req, res) => {
+router.delete("/:id", isLoggedIn, wrapAsync(async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndDelete(id);
     req.flash("success", "Listing deleted!");
