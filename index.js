@@ -84,10 +84,10 @@ app.use("/listing/:id/reviews", reviewRoute);
 app.use("/", userRoute);
 
 //to catch all unmatch route
-app.all("*", (req, res, next) => {
-    console.log(req.url);
-    next(new ExpressError(404, "OPPS! Page not found!"));
-})
+// app.all("*", (req, res, next) => {
+//     console.log(req.url);
+//     next(new ExpressError(404, "OPPS! Page not found!"));
+// })
 
 app.use((err, req, res, next) => {
     let {statusCode, message } = err;

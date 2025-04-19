@@ -3,7 +3,7 @@
   <div class="listing-details-container">
     <div class="listing-image">
       <img
-        src="<%= data.image %>"
+        src="<%= data.image.url %>"
         alt="Listing Image"
         class="listing-img sticky"
       />
@@ -90,4 +90,10 @@
       </div>
     </div>
   </div>
+  <div class="map-container">
+    <span class="map-label-span">It's Located Here :</span>
+  <div id="map"></div>
+  </div>
 </div>
+
+<script src="/js/map.js"></script>

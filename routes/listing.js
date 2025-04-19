@@ -4,6 +4,9 @@ const wrapAsync = require("../utils/wrapAsync");
 const { isLoggedIn, isOwner } = require("../middleware");
 const { validateListing } = require("../middleware");
 const listingController = require("../controllers/listing");
+const multer  = require('multer')
+const { storage } = require("../cloudeConfig")
+const upload = multer({ storage });
 
 //all list route
 router.get("/", wrapAsync(listingController.Index));
@@ -15,8 +18,10 @@ router.get("/new", isLoggedIn, listingController.createListingForm);
 //add new post request
 router.post(
   "/addnew",
-  validateListing,
+  upload.single('listing[image]'),
+  // validateListing,
   wrapAsync(listingController.createListing)
+  
 );
 
 //list detail route
@@ -27,6 +32,7 @@ router
   .put(
     isLoggedIn,
     isOwner,
+    upload.single('listing[image]'),
     validateListing,
     wrapAsync(listingController.updateLising)
   )

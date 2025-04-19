@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate') -%>
    <div class="row">
     <div class="col-8 offset-2">
-        <form method="post" action="/listing/<%= data._id %>?_method=PUT">
+        <form method="post" action="/listing/<%= data._id %>?_method=PUT" enctype="multipart/form-data">
             <h3 class="">Edit</h3>
         <div class="mb-3">
             <label for="title" class="form-label">Title : 
@@ -14,9 +14,12 @@
             <textarea id="description" class="form-control" name="listing[description]"><%= data.description %></textarea>
         </div>
         <div class="mb-3">
-            <label for="image" class="form-label">Image URL :
+            <label for="image" class="form-label">Upload Image :
             </label>
-            <input id="image" class="form-control" type="text" name="listing[image]" value="<%= data.image %>" required>
+            <input id="image" class="form-control" type="file" name="listing[image]">
+        </div>
+        <div class="mb-3">
+            <img src=<%= newUrl %> alt="listing image">
         </div>
         <div class="mb-3">
             <label for="price" class="form-label">What do you thinnk about Price : 

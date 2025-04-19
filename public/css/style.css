@@ -274,3 +274,26 @@ body {
 .review-card-rating {
   color: orange
 }
+
+
+/* Map */
+
+#map {
+  height: 400px;
+  width: 60%;
+  border-radius: 1rem;
+}
+
+.map-label-span{
+  font-weight: bold;
+}
+
+.map-container {
+  position: relative;
+  left: 32%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  margin-bottom: 40px;
+}
