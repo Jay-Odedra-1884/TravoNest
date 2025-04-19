@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const Review = require("./review");
+const { string } = require("joi");
+const { number } = require("joi");
 
 
 //Creating scema
@@ -16,6 +18,10 @@ const listingSchema = mongoose.Schema({
     price:Number,
     location:String,
     country:String,
+    coordinates: {
+        latitude: Number,
+        longitude: Number,        
+    },
     reviews: [
         {
             type: mongoose.Schema.Types.ObjectId,

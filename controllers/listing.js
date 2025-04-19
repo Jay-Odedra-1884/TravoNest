@@ -14,8 +14,15 @@ module.exports.createListing = async (req, res) => {
     let url = req.file.path;
     let filename = req.file.filename;
     newData.image = { url, filename };
-    
     newData.owner = res.locals.currUser._id;
+    const fullLocation = `${newData.location}, ${newData.country}`
+    const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullLocation)}`);
+    const geoData = await geoRes.json();
+    const latitude = geoData[0]?.lat || 0;
+    const longitude = geoData[0]?.lon || 0;
+
+    newData.coordinates = { latitude, longitude };
+    
     
     await newData.save();
     req.flash("success", "New listing added successfully!");
@@ -56,8 +63,17 @@ module.exports.updateLising = async (req, res) => {
         let url = req.file.path;
         let filename = req.file.filename;
         updatedListing.image = { url, filename };
-        updatedListing.save();
     }
+
+    const fullLocation = `${req.body.listing.location}, ${req.body.listing.country}`;
+    const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullLocation)}`);
+    const geoData = await geoRes.json();
+    const latitude = geoData[0]?.lat || 0;
+    const longitude = geoData[0]?.lon || 0;
+
+    updatedListing.coordinates = { latitude, longitude };
+    updatedListing.save();
+
     req.flash("success", "Listing updated successfully!");
     res.redirect(`/listing/${id}`);
 };

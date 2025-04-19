@@ -297,3 +297,9 @@ body {
   align-items: start;
   margin-bottom: 40px;
 }
+
+/* Location input in addNewListing form */
+
+.location-suggestion {
+  cursor: pointer;
+}

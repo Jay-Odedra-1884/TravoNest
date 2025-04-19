@@ -28,9 +28,11 @@
         </div>
         <div class="row">
             <div class="mb-3 col-4">
-                <label for="location" class="form-label">Location :
-                </label>
+                <label for="location" class="form-label">Location <span style="color: gray; font-size: small;">(Dont add country name)</span> :</label>
+            </label>
                 <input id="location" class="form-control" type="text" name="listing[location]" value="<%= data.location %>" required>
+          <ul id="suggestions" class="list-group" style="position:absolute; z-index:1000;"></ul>
+                
             </div>
             <div class="mb-3 col-8">
                 <label for="country" class="form-label">
@@ -66,3 +68,5 @@
     </form>
 </div>
 </div>
+
+<script src="/js/location.js"></script>

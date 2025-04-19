@@ -210,7 +210,7 @@
           </select>
         </div>
         <div class="mb-3 col-8">
-          <label for="location" class="form-label">Location : </label>
+          <label for="location" class="form-label">Location <span style="color: gray; font-size: small;">(Dont add country name)</span> :</label>
           <input
             id="location"
             class="form-control"
@@ -219,9 +219,12 @@
             placeholder="Add location"
             required
           />
+          <ul id="suggestions" class="list-group" style="position:absolute; z-index:1000;"></ul>
         </div>
       </div>
       <button type="submit" class="btn btn-dark">Add +</button>
     </form>
   </div>
 </div>
+
+<script src="/js/location.js"></script>

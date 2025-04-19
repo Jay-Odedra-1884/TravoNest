@@ -11,7 +11,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     // Set map center coordinates and zoom
-    var map = L.map("map").setView([21.8089029, 69.4176413], 14); // Example: Delhi
+    var map = L.map("map").setView([lat, lon], 14); // Example: Delhi
   
     // Add OpenStreetMap tiles
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -19,8 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
   
-    // Optional: Add a marker
-    L.marker([21.8089029, 69.4176413])
+    // Optional: Add a marker 
+    L.marker([lat, lon])
       .addTo(map)
       .bindPopup("Hi How are you? it's my home :)")
       .openPopup();
