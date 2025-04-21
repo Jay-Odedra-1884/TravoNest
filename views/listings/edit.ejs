@@ -3,20 +3,54 @@
     <div class="col-8 offset-2">
         <form method="post" action="/listing/<%= data._id %>?_method=PUT" enctype="multipart/form-data">
             <h3 class="">Edit</h3>
-        <div class="mb-3">
-            <label for="title" class="form-label">Title : 
-            </label>
-            <input id="title" class="form-control" type="text" name="listing[title]" value="<%= data.title %>" required>
-        </div>
+            <div class="row">
+                <div class="mb-3 col-6">
+                  <label for="title" class="form-label">Title : </label>
+                  <input
+                    id="title"
+                    class="form-control"
+                    type="text"
+                    name="listing[title]"
+                    value="<%= data.title %>"
+                    required
+                  />
+                </div>
+                <div class="mb-3 col-6">
+                  <label for="bio" class="form-label">Bio : </label>
+                  <input
+                    id="bio"
+                    class="form-control"
+                    type="text"
+                    name="listing[bio]"
+                    value="<%= data.bio %>"
+                    required
+                  />
+                </div>
+              </div>
         <div class="mb-3">
             <label for="description" class="form-label">Describe Here :
             </label>
             <textarea id="description" class="form-control" name="listing[description]"><%= data.description %></textarea>
         </div>
-        <div class="mb-3">
-            <label for="image" class="form-label">Upload Image :
-            </label>
-            <input id="image" class="form-control" type="file" name="listing[image]">
+        <div class="row">
+            <div class="mb-3 col-5">
+                <label for="image" class="form-label">Upload Image :
+                </label>
+                <input id="image" class="form-control" type="file" name="listing[image]">
+            </div>
+            <div class="mb-3 col-7">
+                <label for="category" class="form-label"> Add Country : </label>
+              <!-- enum: ["city", "mountain", "beach", "forest", "desert", "castels", "house-boat", "amazing-pools", "farms", "island", "camping"], -->
+               
+                <select class="form-select" name="listing[category]" id="category">
+                    <% let categorys = [
+                    "city", "mountain", "beach", "forest", "desert", "castels", "house-boat", "amazing-pools", "farms", "island", "camping"
+               ] %>
+               <% categorys.forEach(category => { %>
+                        <option value="<%= category %>" <%= data.category === category ? "selected" : "" %>><%= category %></option>
+                    <% }); %>
+                </select>
+              </div>
         </div>
         <div class="mb-3">
             <img src=<%= newUrl %> alt="listing image">

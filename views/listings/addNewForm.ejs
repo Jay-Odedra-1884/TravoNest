@@ -3,16 +3,29 @@
   <div class="col-8 offset-2">
     <form method="post" action="/listing/addnew" enctype="multipart/form-data">
       <h3>Create New Listing</h3>
-      <div class="mb-3">
-        <label for="title" class="form-label">Title : </label>
-        <input
-          id="title"
-          class="form-control"
-          type="text"
-          name="listing[title]"
-          placeholder="what is a title for...."
-          required
-        />
+      <div class="row">
+        <div class="mb-3 col-6">
+          <label for="title" class="form-label">Title : </label>
+          <input
+            id="title"
+            class="form-control"
+            type="text"
+            name="listing[title]"
+            placeholder="what is a title for...."
+            required
+          />
+        </div>
+        <div class="mb-3 col-6">
+          <label for="bio" class="form-label">Bio : </label>
+          <input
+            id="bio"
+            class="form-control"
+            type="text"
+            name="listing[bio]"
+            placeholder="Write a sort catchy bio..."
+            required
+          />
+        </div>
       </div>
       <div class="mb-3">
         <label for="description" class="form-label">Describe Here : </label>
@@ -24,26 +37,35 @@
           required
         ></textarea>
       </div>
-      <!-- <div class="mb-3">
-        <label for="price" class="form-label">Image URL </label>
-        <input
-          id="price"
-          class="form-control"
-          type="text"
-          name="listing[image]"
-          placeholder="Paste Image URL here"
-        /> -->
-        <div class="mb-3">
-          <label for="price" class="form-label">Upload Image</label>
-          <input
-            id="price"
-            class="form-control"
-            type="file"
-            name="listing[image]"
-            placeholder="Paste Image URL here"
-          />
-
-      </div>
+        <div class="row">
+          <div class="mb-3 col-5">
+            <label for="price" class="form-label">Upload Image</label>
+            <input
+              id="price"
+              class="form-control"
+              type="file"
+              name="listing[image]"
+              placeholder="Paste Image URL here"
+            />
+        </div>
+        <div class="mb-3 col-7">
+          <label for="category" class="form-label"> Add Country : </label>
+        <!-- enum: ["city", "mountain", "beach", "forest", "desert", "castels", "house-boat", "amazing-pools", "farms", "island", "camping"], -->
+          <select class="form-select" name="listing[category]" id="category">
+            <option value="city">City</option>
+            <option value="mountain">Mountain</option>
+            <option value="beach">Beach</option>
+            <option value="forest">Forest</option>
+            <option value="desert">Desert</option>
+            <option value="castels">Castels</option>
+            <option value="house-boat">House Boat</option>
+            <option value="amazing-pools">Amazing Pools</option>
+            <option value="farms">Farms</option>
+            <option value="island">IsLand</option>
+            <option value="camping">Camping</option>
+          </select>
+        </div>
+        </div>
       <div class="mb-3">
         <label for="price" class="form-label"
           >What do you thinnk about Price :
@@ -221,6 +243,7 @@
           />
           <ul id="suggestions" class="list-group" style="position:absolute; z-index:1000;"></ul>
         </div>
+        
       </div>
       <button type="submit" class="btn btn-dark">Add +</button>
     </form>
