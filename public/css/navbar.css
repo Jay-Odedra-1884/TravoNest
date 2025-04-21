@@ -1,0 +1,99 @@
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.navbar-container {
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    margin-bottom: 10px;
+}
+
+.navbar-options-container {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.navbar-options-container-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar-options-container-right {
+    display: flex;
+    gap: 2px
+}
+
+#navbar-logo {
+    text-decoration: none;
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+}
+
+.navbar-logo-text {
+    font-size: 2rem;
+}
+
+#navbar-logo a {
+    color: #0dcaf0;
+}
+
+.navbar-options-link{
+    display: inline;
+  }
+  
+
+.navbar-login, .navbar-logout {
+    color: black;
+    background-color: #0dcaf0;
+    padding: 10px 20px;
+    border-radius: 0.7rem 0 0 0.7rem ;
+}
+
+.navbar-signup {
+    color: black;
+    background-color: #0dcaf0;
+    padding: 10px 20px;
+    border-radius: 0 0.7rem 0.7rem 0 ;
+}
+
+.navbar-logout {
+    border-radius: 0.7rem;
+}
+
+.dropdown {
+    display: none;
+}
+
+.dropdown-menu li {
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+
+
+@media (max-width: 1075px) {
+
+    .navbar-signup {
+        display: none;
+    }
+
+    .navbar-login {
+        border-radius: 0.7rem;
+    }
+
+    .navbar-options-container-left {
+        display: none;
+    }
+
+    .dropdown {
+        display: block;
+    }
+  }

@@ -1,6 +1,48 @@
-<% layout('layouts/boilerplate') -%>
+<% layout('layouts/boilerplate') -%> 
   <body>
     <div>
+      <div class="filter-container d-flex align-items-center gap-2">
+        <form id="search-form">
+          <div class="search-box">
+            <div class="search-btn-box">
+              <button type="submit" class="search-btn">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </div>
+            <div class="search-inp-box" >
+              <input type="text" class="search-inp" />
+            </div>
+            
+          </div>
+        </form>
+        <div class="d-flex gap-2">
+          <a href="/listing">
+            <div class="filter-box d-flex flex-column justify-content-center align-items-center">
+              <i class="fa-solid fa-list"></i>
+              <p class="filter-box-text">All</p>
+            </div>
+          </a>
+          <a href="/listing?category=mountain">
+            <div class="filter-box d-flex flex-column justify-content-center align-items-center">
+              <i class="fa-solid fa-mountain-sun"></i>
+              <p class="filter-box-text">Mountain</p>
+            </div>
+          </a>
+          <a href="/listing?category=city">
+
+          <div class="filter-box d-flex flex-column justify-content-center align-items-center">
+            <i class="fa-solid fa-city"></i>
+            <p class="filter-box-text">City</p>
+          </div>
+          </a>
+          <a href="/listing?category=beach">
+          <div class="filter-box d-flex flex-column justify-content-center align-items-center">
+            <i class="fa-solid fa-umbrella-beach"></i>
+            <p class="filter-box-text">Beach</p>
+          </div>
+          </a>
+        </div>
+      </div>
         <div class="row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-1 mt-3">
           <% for(let data of datas) { %>
             <a href="/listing/<%= data._id %>" class="card-link">
@@ -8,8 +50,9 @@
                   <img src=<%= data.image.url %> class="card-img-top" alt="Opps no image">
                   <div class="card-img-overlay"></div>
                   <div class="card-body">
-                    <p class="card-text"><i><b><%= data.title %></b></i></p>
-                    <p class="card-text">&#8377;<%=data.price ? data.price.toLocaleString("en-IN") : null %> / Night</p>
+                    <p class="card-text card-title"><i><b><%= data.title %></b></i></p>
+                    <p class="card-text card-bio"><%= data.bio %></p>
+                    <p class="card-text card-price">&#8377;<%=data.price ? data.price.toLocaleString("en-IN") : null %> / Night</p>
                   </div>
               </div>
             </a>
@@ -17,3 +60,16 @@
         </div>
     </div>
   </body>
+
+  <script>
+    let searchForm = document.querySelector("#search-form");
+    let inp = document.querySelector(".search-inp");
+
+    searchForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      let inpvalue = inp.value;
+      if (inpvalue) {
+      window.location.href = `/listing?q=${inpvalue}`;
+      }      
+    })
+  </script>

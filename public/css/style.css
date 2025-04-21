@@ -9,10 +9,7 @@ body {
   flex: 1;
 }
 
-.navbar {
-  height: 5rem;
-  padding: 10px;
-}
+
 
 .fa-compass {
     scale: 1.5;
@@ -25,7 +22,7 @@ body {
 }
 
 .f-container {
-  width: 100vw;
+  /* width: 100vw; */
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -89,6 +86,22 @@ body {
 
 .card-body {
   padding: 10px;
+}
+
+.card-title {
+  margin-bottom: 0.2rem;
+}
+
+.card-bio {
+  opacity: 0.5;
+  height: 2.5rem;
+}
+
+.card-price {
+  font-weight: 500;
+  color: orange;
+  font-size: 1.2rem;
+  text-align: right;
 }
 
 .card-img-overlay:hover {
@@ -184,7 +197,7 @@ body {
 .listing-price {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #ff5a5f;
+  color: orange;
   margin: 0;
 }
 
@@ -196,7 +209,8 @@ body {
 }
 
 .edit-button,
-.delete-button {
+.delete-button,
+.button-1, .button-2 {
   padding: 10px 20px;
   font-size: 1rem;
   border: none;
@@ -205,23 +219,23 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.edit-button {
+.edit-button, .button-1 {
   background-color: #007bff;
   color: #fff;
   text-decoration: none;
   text-align: center;
 }
 
-.edit-button:hover {
+.edit-button:hover, .button-1:hover {
   background-color: #0056b3;
 }
 
-.delete-button {
+.delete-button, .button-2 {
   background-color: #dc3545;
   color: #fff;
 }
 
-.delete-button:hover {
+.delete-button:hover, .button-2:hover {
   background-color: #c82333;
 }
 
@@ -302,4 +316,72 @@ body {
 
 .location-suggestion {
   cursor: pointer;
+}
+
+
+/* search box */
+
+.search-box {
+  display: flex;
+}
+
+.search-inp {
+  background: transparent;
+  outline: none;
+  border: none;
+}
+
+.search-inp-box {
+  background-color: rgb(224, 223, 223);
+  padding: 5px 10px;
+  border-radius: 0 0.7rem 0.7rem 0; 
+
+}
+
+.search-btn {
+  color: #0dcaf0;
+  background: transparent;
+  border: none;
+  transition: all 0.4s ease;
+}
+
+.search-btn-box {
+  background-color: rgb(224, 223, 223);
+  padding: 5px 10px;
+  border-radius: 0.7rem 0 0 0.7rem;
+  display: flex;
+  align-items: center;  
+  transition: all 0.4s ease;
+}
+
+.search-btn-box:hover {
+  background-color: #0dcaf0;
+}
+
+.search-btn-box:hover .search-btn {
+  scale:1.2;
+  color: black;
+}
+
+.search-btn-box:active {
+  scale: 0.9;
+}
+
+.filter-box {
+  display: flex;
+  opacity: 0.7;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  border: 2px solid gray;
+  border-radius: 0.8rem;
+  padding: 0.5rem 1rem;
+}
+
+.filter-box:hover {
+  opacity: 1;
+}
+
+.filter-box-text {
+  opacity: 0.5;
+  margin-bottom: 0;
 }

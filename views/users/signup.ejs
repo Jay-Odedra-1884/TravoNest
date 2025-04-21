@@ -1,22 +1,16 @@
 <% layout('layouts/boilerplate') -%>
-<div>
-    <h2>SignUp in Travonest</h2>
-    <form method="post" action="/sign-up">
+<div class="grid col-md-4 offset-4 h-50 mt-5">
+    <h2 class="mb-4">SignUp in Travonest</h2>
+    <form method="post" action="/sign-up" class="d-flex flex-column gap-3">
         <div class="mb-3">
-            <label for="username" class="form-label">Username : 
-            </label>
-            <input id="username" class="form-control" type="text" name="username" required>
+            <input id="username" placeholder="Username" class="form-control" type="text" name="username" required>
         </div>
         <div class="mb-3">
-            <label for="email" class="form-label">Email : 
-            </label>
-            <input id="email" class="form-control" type="text" name="email" required>
+            <input id="email" placeholder="Email" class="form-control" type="text" name="email" required>
         </div>
         <div class="mb-3">
-            <label for="password" class="form-label">Password : 
-            </label>
-            <input id="password" class="form-control" type="text" name="password" required>
+            <input id="password" placeholder="Password" class="form-control" type="text" name="password" required>
         </div>
-        <button>SignUp</button>
+        <button class="button-1 bg-info offset-4 col-md-4">SignUp</button>
     </form>
 </div>

@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 const Review = require("./review");
-const { string } = require("joi");
-const { number } = require("joi");
 
 
 //Creating scema
@@ -9,6 +7,15 @@ const listingSchema = mongoose.Schema({
     title:{
         type:String,
         required:true,
+    },
+    bio: {
+        type:String,
+        required:true,
+    },
+    category : {
+        type: String,
+        enum: ["city", "mountain", "beach", "forest", "desert", "castels", "house-boat", "amazing-pools", "farms", "island", "camping"],
+        required: true,
     },
     description:String,
     image:{

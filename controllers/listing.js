@@ -1,7 +1,28 @@
+const { serializeUser } = require("passport");
 const Listing = require("../models/listing");
 
 module.exports.Index = async (req, res) => {
-    const listingData = await Listing.find();
+    let listingData = await Listing.find();
+    
+    try {
+       const category = req.query.category;
+    if(category !== undefined) {
+        listingData = listingData.filter((data) => (data.category === category));
+    }
+   }
+   catch (err) {
+        console.log(err);
+    }
+
+    try {
+      const searchValue = req.query.q;
+      if(searchValue !== undefined) {
+        listingData = listingData.filter((data) => (data.title.toLowerCase().includes(searchValue.toLowerCase())));
+      }  
+    } catch (err) {
+        console.log(err);
+    }
+    
     res.render("listings/index.ejs", { datas:listingData });
 };
 

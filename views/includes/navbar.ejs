@@ -1,37 +1,79 @@
-<nav
-  class="navbar navbar-expand-lg navbar-light bg-light border-bottom sticky-top"
->
-  <a class="navbar-brand" href="#"><i class="fa-solid fa-compass"></i></a>
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#navbarNavAltMarkup"
-    aria-controls="navbarNavAltMarkup"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link" href="/"
-        ><i class="fa-solid fa-house"></i> Home</a
-      >
-      <a class="nav-item nav-link" href="/listing"
-        ><i class="fa-solid fa-book"></i> All Listing</a
-      >
-      <a class="nav-item nav-link" href="/listing/new"
-        ><i class="fa-solid fa-circle-plus"></i> Want to add</a
-      >
-    </div>
-    <div class="navbar-nav ms-auto">
-      <% if(!currUser) { %>
-      <a class="nav-item nav-link" href="/login">Login</a>
-      <a class="nav-item nav-link" href="/sign-up">SignUp</a>
-      <% } %> <% if(currUser) {%>
-      <a class="nav-item nav-link" href="/logout"> Logout</a>
-      <% } %>
+<link rel="stylesheet" href="/css/navbar.css" />
+
+<nav class="navbar-container">
+  <div id="navbar-logo">
+    <a href="/listing"
+      ><i class="fa-solid fa-suitcase-rolling"></i>
+      <span class="navbar-logo-text">Travonest</span></a
+    >
+  </div>
+  <div id="navbarNavAltMarkup">
+    <div class="navbar-options-container">
+      <div class="navbar-options-container-left">
+        
+  
+      
+        <a href="/"
+          ><i class="fa-solid fa-house"></i>
+          <span class="navbar-options-link">Home</span></a
+        >
+
+        <a href="/listing"
+          ><i class="fa-solid fa-book"></i>
+          <span class="navbar-options-link">All Listing</span></a
+        >
+
+        <a href="/listing/new"
+          ><i class="fa-solid fa-circle-plus"></i>
+          <span class="navbar-options-link">Want to add</span></a
+        >
+      </div>
+      <div class="dropdown">
+        <a
+          class="btn btn-secondary dropdown-toggle"
+          href="#"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Menu
+        </a>
+
+        <ul class="dropdown-menu">
+          <li>
+            <a href="/"
+              ><i class="fa-solid fa-house"></i>
+              <span class="navbar-options-link">Home</span></a
+            >
+          </li>
+          <li>
+            <a href="/listing"
+              ><i class="fa-solid fa-book"></i>
+              <span class="navbar-options-link">All Listing</span></a
+            >
+          </li>
+          <li>
+            <a href="/listing/new"
+              ><i class="fa-solid fa-circle-plus"></i>
+              <span class="navbar-options-link">Want to add</span></a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="navbar-options-container-right">
+        <% if(!currUser) { %>
+        <div class="navbar-login">
+          <a href="/login">Login</a>
+        </div>
+        <div class="navbar-signup">
+          <a href="/sign-up">SignUp</a>
+        </div>
+        <% } %> <% if(currUser) { %>
+        <div class="navbar-logout">
+          <a href="/logout" class="navbar-logout">Logout</a>
+        </div>
+        <% } %>
+      </div>
     </div>
   </div>
 </nav>
