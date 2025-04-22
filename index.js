@@ -3,6 +3,7 @@ const app = express();
 const listingRoute = require("./routes/listing")
 const reviewRoute = require("./routes/reviews");
 const userRoute = require("./routes/user");
+const adminRoute = require("./routes/admin");
 const mongoose = require("mongoose");
 const Path = require("path");
 const methodOverride = require("method-override");
@@ -83,11 +84,14 @@ app.use("/listing/:id/reviews", reviewRoute);
 //*for user
 app.use("/", userRoute);
 
-//to catch all unmatch route
-// app.all("*", (req, res, next) => {
-//     console.log(req.url);
-//     next(new ExpressError(404, "OPPS! Page not found!"));
-// })
+//*for admin
+app.use("/admin", adminRoute )
+
+// to catch all unmatch route
+app.all("*", (req, res, next) => {
+    console.log(req.url);
+    next(new ExpressError(404, "OPPS! Page not found!"));
+})
 
 app.use((err, req, res, next) => {
     let {statusCode, message } = err;

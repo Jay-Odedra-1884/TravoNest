@@ -11,6 +11,11 @@
     align-items: center;
     padding: 0 1rem;
     margin-bottom: 10px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    background-color: white;
 }
 
 .navbar-options-container {
@@ -95,5 +100,17 @@
 
     .dropdown {
         display: block;
+    }
+  }
+
+
+  
+@media(max-width: 600px){
+    #navbar-logo {
+        font-size: 2rem;
+    }
+
+    .navbar-logo-text {
+        font-size: 1rem;
     }
   }

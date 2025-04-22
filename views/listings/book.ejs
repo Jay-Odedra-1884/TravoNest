@@ -16,15 +16,15 @@
       <p>Owner Contact : <%= data.owner.email %></p>
     </div>
     <div class="w-50">
-    <h3 class="mb-3">Booking Form</h3>
-      <form action="" class="grid">
+      <h3 class="mb-3">Booking Form</h3>
+      <form action="/listing/<%= data._id %>/book" method="POST" class="grid">
         <div class="row">
           <div class="col-6">
             <label for="checkin-date">Chek In :</label>
             <input
               type="date"
               class="form-control"
-              name="checkin-date"
+              name="booking[checkin]"
               id="checkin-date"
             />
           </div>
@@ -33,30 +33,41 @@
             <input
               type="date"
               class="form-control"
-              name="checkout-date"
+              name="booking[checkout]"
               id="checkout-date"
             />
           </div>
         </div>
         <div class="mt-3">
-            <label for="guests">No of Guests :</label>
-            <input
-                type="number"
-                class="form-control"
-                name="guests"
-                id="guests"
-                min="1"
-            />
+          <label for="guests">No of Guests :</label>
+          <input
+            type="number"
+            class="form-control"
+            name="booking[totalGuests]"
+            id="guests"
+            min="1"
+          />
         </div>
         <div class="row mt-3">
-            <div class="col-6">
-                <label for="adults">Adults :</label>
-                <input type="number" class="form-control" name="adults" id="adults">
-            </div>
-            <div class="col-6">
-                <label for="adults">Children :</label>
-                <input type="number" class="form-control" name="children" id="children">
-            </div>
+          <div class="col-6">
+            <label for="adults">Adults :</label>
+            <input
+              type="number"
+              class="form-control"
+              name="booking[adults]"
+              id="adults"
+            />
+          </div>
+          <div class="col-6">
+            <label for="adults">Children :</label>
+            <input
+              type="number"
+              class="form-control"
+              name="booking[children]"
+              id="children"
+            />
+          </div>
+          <button class="btn btn-info mt-3 col-10 offset-1" type="submit">Book now</button>
         </div>
       </form>
     </div>
