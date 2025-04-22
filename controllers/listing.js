@@ -105,3 +105,13 @@ module.exports.deleteListing = async (req, res) => {
     req.flash("success", "Listing deleted!");
     res.redirect("/listing");
 };
+
+module.exports.bookListingForm = async (req, res) => {
+    let { id } = req.params;
+    let data =await Listing.findById(id).populate("owner");
+    if(!data) {
+        req.flash("error", "Listing not found!");
+        return res.redirect("/listing");
+    }
+    res.render("listings/book.ejs", { data });
+}

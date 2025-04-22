@@ -20,6 +20,9 @@
       <p class="listing-price">
         &#8377;<%= data.price.toLocaleString("en-IN") %>
       </p>
+      <a href="/listing/<%= data._id %>/book">
+        <button class="btn btn-info" >Book Now</button>
+      </a>
       <% if(currUser && data.owner._id.equals(currUser._id)) {%>
         <div class="listing-actions">
           <a href="/listing/<%= data._id %>/edit" class="edit-button"

@@ -1,0 +1,64 @@
+<% layout('layouts/boilerplate') -%>
+<body>
+  <div class="d-flex justify-content-around">
+    <div class="card booking-card">
+      <img
+        src="<%= data.image.url %>"
+        class="card-img-top"
+        alt="Opps something went wrong"
+      />
+      <h4 class="card-title"><%= data.title %></h4>
+      <p><%= data.bio %></p>
+      <p>Owener Name : <%= data.owner.username %></p>
+      <p>Location : <%= data.location %>, <%= data.country %></p>
+      <p>Price : &#8377;<%= data.price.toLocaleString("en-IN") %> /Night</p>
+      <p>Categort : <%= data.category %></p>
+      <p>Owner Contact : <%= data.owner.email %></p>
+    </div>
+    <div class="w-50">
+    <h3 class="mb-3">Booking Form</h3>
+      <form action="" class="grid">
+        <div class="row">
+          <div class="col-6">
+            <label for="checkin-date">Chek In :</label>
+            <input
+              type="date"
+              class="form-control"
+              name="checkin-date"
+              id="checkin-date"
+            />
+          </div>
+          <div class="col-6">
+            <label for="checkout-date">Chek Out :</label>
+            <input
+              type="date"
+              class="form-control"
+              name="checkout-date"
+              id="checkout-date"
+            />
+          </div>
+        </div>
+        <div class="mt-3">
+            <label for="guests">No of Guests :</label>
+            <input
+                type="number"
+                class="form-control"
+                name="guests"
+                id="guests"
+                min="1"
+            />
+        </div>
+        <div class="row mt-3">
+            <div class="col-6">
+                <label for="adults">Adults :</label>
+                <input type="number" class="form-control" name="adults" id="adults">
+            </div>
+            <div class="col-6">
+                <label for="adults">Children :</label>
+                <input type="number" class="form-control" name="children" id="children">
+            </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>

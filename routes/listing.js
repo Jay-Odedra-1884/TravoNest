@@ -51,4 +51,7 @@ router.get(
   wrapAsync(listingController.updateLisingForm)
 );
 
+//for booing a listing
+router.get("/:id/book", wrapAsync(listingController.bookListingForm));
+
 module.exports = router;

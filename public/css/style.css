@@ -9,8 +9,6 @@ body {
   flex: 1;
 }
 
-
-
 .fa-compass {
     scale: 1.5;
 }
@@ -333,7 +331,7 @@ body {
 
 .search-inp-box {
   background-color: rgb(224, 223, 223);
-  padding: 5px 10px;
+  padding: 8px 10px;
   border-radius: 0 0.7rem 0.7rem 0; 
 
 }
@@ -368,7 +366,9 @@ body {
 }
 
 .filter-box {
+  width: auto;
   display: flex;
+  text-wrap-mode: nowrap;
   opacity: 0.7;
   transition: all 0.4s ease;
   cursor: pointer;
@@ -379,9 +379,42 @@ body {
 
 .filter-box:hover {
   opacity: 1;
+  border:2px solid #0dcaf0;
+  color: #0dcaf0;
 }
  
 .filter-box-text {
   opacity: 0.5;
   margin-bottom: 0;
+}
+
+.filter-container {
+  width: 100%;
+}
+
+.filter-options {
+ width: 80%;
+ overflow-y: auto;
+ scrollbar-width: none;
+}
+
+.filter-options a {
+  text-decoration: none;
+  color: black;
+}
+
+
+
+/* booking */
+
+.booking-card {
+  border: none;
+}
+
+
+
+/* General */
+
+.form-control:focus, .form-select:focus {
+  box-shadow:0 0 300px #0dcaf0;
 }
