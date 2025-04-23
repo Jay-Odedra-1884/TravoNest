@@ -1,0 +1,81 @@
+<% layout('layouts/boilerplate') -%>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .main-body {
+        overflow-y: hidden;
+    }
+</style>
+<div class="show-main-cimtainer main-body">
+  <div class="listing-details-container">
+    <div class="listing-image">
+      <img
+        src="<%= data.image.url %>"
+        alt="Listing Image"
+        class="listing-img sticky"
+      />
+    </div>
+
+    <div class="listing-info">
+      <h1 class="listing-title"><%= data.title %> <br> <span class="listing-title-owner">By <%= data.owner.username %></span></h1>
+      <p class="listing-location"><%= data.location %>, <%= data.country %></p>
+      <p class="listing-description"><%= data.description %></p>
+      <p class="listing-price">
+        &#8377;<%= data.price.toLocaleString("en-IN") %>
+      </p>
+      <% if(currUser && data.owner._id.equals(currUser._id)) {%>
+        <div class="listing-actions">
+          <a href="/listing/<%= data._id %>" class="btn btn-info"
+            >Go to Listing</a
+          >
+        </div>
+        <hr>
+        <a href="/admin/<%= data._id %>/add-room" class="btn btn-info"
+            >Add Room</a
+          >
+          <div class="d-flex flex-column">
+            <% for(let room of data.rooms) { %>
+                <div class="card mt-3">
+                    <div class="card-header">
+                      <%= room.highlight %>
+                    </div>
+                    <div class="card-body">
+                    <div class="d-flex gap-3">
+                        <% for(let feature of room.amenities) { %>
+                            <% const iconClassMap = {
+                                wifi: "fa-wifi",
+                                tv: "fa-tv",
+                                kichen:"fa-kitchen-set",
+                                meal: "fa-spoon",
+                                pickup: "fa-taxi",
+                            }; 
+                            const icon = iconClassMap[feature] || "fa-question-circle";%>
+
+                           <div class="d-flex gap-2 align-items-center">
+                            <i class="fa-solid <%= icon %>"></i>
+                            <p class="card-text"><%= feature %></p> 
+                           </div>   
+                        <% } %>
+                    </div>
+                    <p class="card-text mt-3">
+                        <% if (room.ac) { %>
+                          <i class="fa-solid fa-wind"></i> <span>Air Conditioning</span>
+                        <% } else { %>
+                          <i class="fa-solid fa-fan"></i> <span>Non A/C</span>
+                        <% } %>
+                      </p>
+                      <p class="card-text">Max Number of Guests :<%= room.maxCapacity %></p>
+                      <p class="card-text">&#8377;<%= room.price %> /Night</p>
+                      <a href="#" class="btn btn-dark">Edit</a>
+                    </div>
+                  </div>    
+            <% } %>
+          </div>
+        <% } %>
+    </div>
+  </div>
+</div>
+
+<script src="/js/map.js"></script>

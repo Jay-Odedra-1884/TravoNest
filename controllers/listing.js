@@ -126,39 +126,50 @@ module.exports.bookListingForm = async (req, res) => {
   res.render("listings/book.ejs", { data });
 };
 
-module.exports.bookListing = async (req, res) => {
+module.exports.availableRooms = async (req, res) => {
   let { id } = req.params;
   let bookingData = req.body.booking;
-  let listing = await Listing.findById(id);
+  let listing = await Listing.findById(id).populate("rooms");
   let isAvilable = true;
+  let availableRooms = [];
 
-  if (listing && listing.bookings) {
-    isAvilable = listing.bookings.every(
-      (data) =>
-        new Date(data.checkin) >= new Date(bookingData.checkout) || new Date(data.checkout) <= new Date(bookingData.checkin)
-    );
+  for(let room of listing.rooms) {
+    if (room && room.bookings) {
+      isAvilable = room.bookings.every(
+        (data) =>
+          new Date(data.checkin) >= new Date(bookingData.checkout) || new Date(data.checkout) <= new Date(bookingData.checkin)
+      );
+      if(isAvilable) {
+        availableRooms.push(room);
+      }
+    }
   }
 
-  if (!isAvilable) {
+  if (availableRooms.length === 0) {
     req.flash("error", "This listing is not available for the selected dates!");
     return res.redirect(`/listing/${id}/book`);
   }
-  console.log(isAvilable);
 
-  let newBooking = {
-    checkin: new Date(bookingData.checkin),
-    checkout: new Date(bookingData.checkout),
-    username: "Jay",
-    guests: {
-        total: bookingData.totalGuests,
-        adults: bookingData.adults,
-        children: bookingData.children || 0
-    },
-    customer: res.locals.currUser._id,
-  };
+  
 
-  listing.bookings.push(newBooking);
+  // let newBooking = {
+  //   checkin: new Date(bookingData.checkin),
+  //   checkout: new Date(bookingData.checkout),
+  //   username: "Jay",
+  //   guests: {
+  //       total: bookingData.totalGuests,
+  //       adults: bookingData.adults,
+  //       children: bookingData.children || 0
+  //   },
+  //   customer: res.locals.currUser._id,
+  // };
 
-  listing.save();
-  res.send("Booking data received successfully!");
+  // listing.bookings.push(newBooking);
+
+  // listing.save();
+  res.render("listings/showRooms.ejs", { availableRooms });
 };
+
+module.exports.bookRoom = async (req, res) => {
+  res.send("Booking room");
+}

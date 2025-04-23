@@ -1,0 +1,38 @@
+<% layout('layouts/boilerplate') -%>
+<div class="d-flex flex-column">
+    <% for(let room of availableRooms) { %>
+        <div class="card mt-3">
+            <div class="card-header">
+              <%= room.highlight %>
+            </div>
+            <div class="card-body">
+            <div class="d-flex gap-3">
+                <% for(let feature of room.amenities) { %>
+                    <% const iconClassMap = {
+                        wifi: "fa-wifi",
+                        tv: "fa-tv",
+                        kichen:"fa-kitchen-set",
+                        meal: "fa-spoon",
+                        pickup: "fa-taxi",
+                    }; 
+                    const icon = iconClassMap[feature] || "fa-question-circle";%>
+
+                   <div class="d-flex gap-2 align-items-center">
+                    <i class="fa-solid <%= icon %>"></i>
+                    <p class="card-text"><%= feature %></p> 
+                   </div>   
+                <% } %>
+            </div>
+            <p class="card-text mt-3">
+                <% if (room.ac) { %>
+                  <i class="fa-solid fa-wind"></i> <span>Air Conditioning</span>
+                <% } else { %>
+                  <i class="fa-solid fa-fan"></i> <span>Non A/C</span>
+                <% } %>
+              </p>
+              <p class="card-text">Max Number of Guests :<%= room.maxCapacity %></p>
+              <p class="card-text">&#8377;<%= room.price %> /Night</p>
+            </div>
+          </div>    
+    <% } %>
+  </div>

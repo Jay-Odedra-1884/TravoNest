@@ -48,8 +48,12 @@
         <div class="w-75">
           <p><%= data.description %></p>
         </div>
-        <p class="listing-price">&#8377;<%= data.price.toLocaleString("en-IN") %></p>
+        <div class="d-flex justify-content-between align-items-center">
+          <p class="listing-price">&#8377;<%= data.price.toLocaleString("en-IN") %></p>
+      <a href="/admin/<%= data._id %>" class="readmore-btn">Read more</a>
+        </div>
       </div>
+
     </div>
     <% } %>
   </div>

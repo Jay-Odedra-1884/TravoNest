@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const roomSchema = mongoose.Schema({
-    roomtype: {
+    highlight: {
         type: String,
     },
     ac: {
@@ -55,3 +55,7 @@ const roomSchema = mongoose.Schema({
         }
     ]
 });
+
+const Room = mongoose.model("Room", roomSchema);
+
+module.exports = Room;

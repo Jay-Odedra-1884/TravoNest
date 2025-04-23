@@ -8,9 +8,14 @@ hr {
     gap: 10px;
 }
 
+.admin-listing-card a {
+    text-decoration: none;
+    color: black;
+}
+
 .admin-listing-card {
     width: 100%;
-    min-height: 15rem;
+    max-height: 15rem;
     border: 2px solid rgba(128, 128, 128, 0.525);
     border-radius: 1.1rem;
     display: flex;
