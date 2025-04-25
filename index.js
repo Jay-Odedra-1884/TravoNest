@@ -4,6 +4,7 @@ const listingRoute = require("./routes/listing")
 const reviewRoute = require("./routes/reviews");
 const userRoute = require("./routes/user");
 const adminRoute = require("./routes/admin");
+const paymentRoutes = require('./routes/payment');
 const mongoose = require("mongoose");
 const Path = require("path");
 const methodOverride = require("method-override");
@@ -86,6 +87,19 @@ app.use("/", userRoute);
 
 //*for admin
 app.use("/admin", adminRoute )
+
+//*For payment
+app.use('/payment', paymentRoutes);
+
+//*testing route
+app.get("/test", (req, res) => {
+    let payment = {
+        payment_id: 'pay_QNOsPHvwHiuxgn', 
+        order_id: 'order_QNOs4kUiKLzKgw', 
+        signature: '6221d3156337cde1755646ad3fd704963decb2c8297bbeb4acb8fbf918a500a6'
+      }
+    res.render("payment/success.ejs", { payment });
+})
 
 // to catch all unmatch route
 // app.all("*", (req, res, next) => {

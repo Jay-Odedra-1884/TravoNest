@@ -22,36 +22,8 @@ const roomSchema = mongoose.Schema({
     },
     bookings: [
         {
-            checkin: {
-                type: Date,
-                required: true,
-            },
-            checkout:{
-                type: Date,
-                required: true,
-            },
-            username: {
-                type: String,
-                required: true,
-            },
-            guests : {
-                total: {
-                    type: Number,
-                    required: true,
-                },
-                adults: {
-                    type: Number,
-                    required: true,
-                },
-                children: {
-                    type: Number,
-                    default: 0,
-                },
-            },
-            customer: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "User",
-            }
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Booking",
         }
     ]
 });

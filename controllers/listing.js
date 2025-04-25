@@ -1,5 +1,6 @@
-const { serializeUser } = require("passport");
+const Booking = require("../models/booking");
 const Listing = require("../models/listing");
+const Room = require("../models/room");
 
 module.exports.Index = async (req, res) => {
   let listingData = await Listing.find();
@@ -129,28 +130,32 @@ module.exports.bookListingForm = async (req, res) => {
 module.exports.availableRooms = async (req, res) => {
   let { id } = req.params;
   let bookingData = req.body.booking;
-  let listing = await Listing.findById(id).populate("rooms");
+  let listing = await Listing.findById(id).populate({
+    path: "rooms",
+    populate: {
+      path: "bookings",
+    },
+  });
   let isAvilable = true;
   let availableRooms = [];
 
-  for(let room of listing.rooms) {
+  for (let room of listing.rooms) {
     if (room && room.bookings) {
       isAvilable = room.bookings.every(
-        (data) =>
-          new Date(data.checkin) >= new Date(bookingData.checkout) || new Date(data.checkout) <= new Date(bookingData.checkin)
+        (b) =>
+          new Date(b.checkin) >= new Date(bookingData.checkout) ||
+          new Date(b.checkout) <= new Date(bookingData.checkin)
       );
-      if(isAvilable) {
+      if (isAvilable) {
         availableRooms.push(room);
       }
     }
   }
 
   if (availableRooms.length === 0) {
-    req.flash("error", "This listing is not available for the selected dates!");
+    req.flash("error", "This listing rooms is not available for the selected dates!");
     return res.redirect(`/listing/${id}/book`);
   }
-
-  
 
   // let newBooking = {
   //   checkin: new Date(bookingData.checkin),
@@ -167,9 +172,36 @@ module.exports.availableRooms = async (req, res) => {
   // listing.bookings.push(newBooking);
 
   // listing.save();
-  res.render("listings/showRooms.ejs", { availableRooms });
+  res.render("listings/showRooms.ejs", { availableRooms, id, bookingData });
 };
 
 module.exports.bookRoom = async (req, res) => {
-  res.send("Booking room");
-}
+  const bookingData = req.body.booking;
+  const payment = {
+    payment_id: req.body.razorpay_payment_id,
+    order_id: req.body.razorpay_order_id,
+    signature: req.body.razorpay_signature,
+  };
+
+  console.log("Payment data:", payment);
+
+  let { id, roomId } = req.params;
+  let listing = await Listing.findById(id).populate("rooms");
+  let room = await Room.findById(roomId).populate("bookings");
+  let newBooking = new Booking({
+    checkin: new Date(bookingData.checkin),
+    checkout: new Date(bookingData.checkout),
+    guests: {
+      total: bookingData.totalGuests,
+      adults: bookingData.adults,
+      children: bookingData.children || 0,
+    },
+    customer: res.locals.currUser._id,
+  });
+
+  await newBooking.save();
+  await room.bookings.push(newBooking._id);
+  await room.save();
+
+  res.render("payment/success.ejs", { payment });
+};

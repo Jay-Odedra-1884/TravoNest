@@ -54,15 +54,17 @@ router.get(
 //for booing a listing
 router.get("/:id/book", wrapAsync(listingController.bookListingForm));
 
-router.get(
+router.post(
   "/:id/rooms",
   // isLoggedIn,
   wrapAsync(listingController.availableRooms)
 );
 
 router.post(
-  "/:id/book",
+  "/:id/book/:roomId",
   isLoggedIn,
   wrapAsync(listingController.bookRoom)
 )
+
+
 module.exports = router;
