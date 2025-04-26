@@ -1,6 +1,7 @@
 const Booking = require("../models/booking");
 const Listing = require("../models/listing");
 const Room = require("../models/room");
+const User = require("../models/user");
 
 module.exports.Index = async (req, res) => {
   let listingData = await Listing.find();
@@ -183,8 +184,6 @@ module.exports.bookRoom = async (req, res) => {
     signature: req.body.razorpay_signature,
   };
 
-  console.log("Payment data:", payment);
-
   let { id, roomId } = req.params;
   let listing = await Listing.findById(id).populate("rooms");
   let room = await Room.findById(roomId).populate("bookings");
@@ -199,9 +198,38 @@ module.exports.bookRoom = async (req, res) => {
     customer: res.locals.currUser._id,
   });
 
+  let user = await User.findById(res.locals.currUser._id);
+  user.bookedListing.push(listing._id);
+  user.save();
+
   await newBooking.save();
   await room.bookings.push(newBooking._id);
   await room.save();
 
   res.render("payment/success.ejs", { payment });
 };
+
+module.exports.showBookings = async(req, res) => {
+  let userId = res.locals.currUser._id;
+  
+  let user = await User.findById(userId).populate({
+    path: "bookedListing",
+    populate: {
+      path: "rooms",
+      populate: {
+        path: "bookings",
+        match: { customer: userId } // Only get bookings for this user
+      }
+    }
+  });
+  
+  // Filter out listings that don't have any bookings
+  const bookingData = user.bookedListing.filter(listing => {
+    return listing.rooms.some(room => room.bookings && room.bookings.length > 0);
+  });
+  
+  res.render("listings/myBookings.ejs", { 
+    bookingData,
+    userId 
+  });
+}

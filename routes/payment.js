@@ -27,7 +27,6 @@ router.post('/order', async (req, res) => {
 });
 
 router.post('/success', (req, res) => {
-  // In real projects, validate the payment signature here
   res.render('payment/success.ejs', { payment: req.body });
 });
 

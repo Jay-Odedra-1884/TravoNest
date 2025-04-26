@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync");
-const { isLoggedIn, isOwner } = require("../middleware");
+const { isLoggedIn, isOwner, validateBooking } = require("../middleware");
 const { validateListing } = require("../middleware");
 const listingController = require("../controllers/listing");
 const multer  = require('multer')
@@ -23,6 +23,12 @@ router.post(
   wrapAsync(listingController.createListing)
   
 );
+
+router.get(
+  "/bookings",
+  isLoggedIn,
+  wrapAsync(listingController.showBookings)
+)
 
 //list detail route
 router
@@ -52,11 +58,12 @@ router.get(
 );
 
 //for booing a listing
-router.get("/:id/book", wrapAsync(listingController.bookListingForm));
+router.get("/:id/book", isLoggedIn, wrapAsync(listingController.bookListingForm));
 
 router.post(
   "/:id/rooms",
-  // isLoggedIn,
+  isLoggedIn,
+  validateBooking,
   wrapAsync(listingController.availableRooms)
 );
 

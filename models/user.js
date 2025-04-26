@@ -1,4 +1,3 @@
-const { required } = require("joi");
 const mongoose = require("mongoose");
 const passportLocalMongoose = require("passport-local-mongoose");
 
@@ -7,10 +6,10 @@ const userSchema = new mongoose.Schema({
         type:String,
         required: true,
     },
-    bookings: [
+    bookedListing: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Booking",
+            ref: "Listing",
         }
     ],
 });

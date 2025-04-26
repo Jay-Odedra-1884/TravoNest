@@ -92,14 +92,14 @@ app.use("/admin", adminRoute )
 app.use('/payment', paymentRoutes);
 
 //*testing route
-app.get("/test", (req, res) => {
-    let payment = {
-        payment_id: 'pay_QNOsPHvwHiuxgn', 
-        order_id: 'order_QNOs4kUiKLzKgw', 
-        signature: '6221d3156337cde1755646ad3fd704963decb2c8297bbeb4acb8fbf918a500a6'
-      }
-    res.render("payment/success.ejs", { payment });
-})
+// app.get("/test", (req, res) => {
+//     let payment = {
+//         payment_id: 'pay_QNOsPHvwHiuxgn', 
+//         order_id: 'order_QNOs4kUiKLzKgw', 
+//         signature: '6221d3156337cde1755646ad3fd704963decb2c8297bbeb4acb8fbf918a500a6'
+//       }
+//     res.render("payment/success.ejs", { payment });
+// })
 
 // to catch all unmatch route
 // app.all("*", (req, res, next) => {
