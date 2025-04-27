@@ -10,29 +10,29 @@
   <hr />
   <div class="admin-listing-card-container">
     <% for(let data of datas) { %>
-    <div class="admin-listing-card d-flex">
+    <div class="admin-listing-card d-flex mb-3">
       <div class="admin-card-image-box">
         <img src="<%= data.image.url %>" alt="Listing image" />
       </div>
-      <div class="m-3 w-100">
+      <div class="m-md-3 p-2 w-100">
         <div
-          class="mb-3 w-100 d-flex justify-content-between align-items-start"
+          class="mb-m-3 w-100 d-flex justify-content-between align-items-start"
         >
-          <div>
+          <div >
             <h4 class="card-title"><%= data.title %></h4>
             <p class="card-text opacity-75"><%= data.bio %></p>
           </div>
-          <div class="d-flex gap-2 align-items-center">
-            <a href="/admin/<%= data._id %>/add-room" class="btn btn-info"
+          <div class="d-md-flex gap-2 align-items-center">
+            <a href="/admin/<%= data._id %>/add-room" class="btn btn-info admin-addroom-btn"
               >Add Room</a
             >
-            <a href="/listing/<%= data._id %>/edit" class="btn btn-primary"
+            <a href="/listing/<%= data._id %>/edit" class="btn btn-primary admin-edit-btn"
               >Edit Details</a
             >
             <form
               method="post"
               action="/listing/<%= data._id %>?_method=DELETE"
-              class="delete-form"
+              class="delete-form admin-delete-btn"
             >
               <button type="submit" class="btn btn-danger">
                 Delete Listing
@@ -40,7 +40,7 @@
             </form>
           </div>
         </div>
-        <div class="d-flex gap-2">
+        <div class="d-flex gap-2 mt-2">
           <p class="card-category"><%= data.category %></p>
           <p class="card-category"><%= data.location %></p>
           <p class="card-category"><%= data.country %></p>

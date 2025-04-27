@@ -1,10 +1,10 @@
 <% layout('layouts/boilerplate') -%>
 <div class="row">
-  <div class="col-8 offset-2">
+  <div class="col-10 offset-1 col-md-8 offset-md-2 mb-3">
     <form method="post" action="/listing/addnew" enctype="multipart/form-data">
       <h3>Create New Listing</h3>
       <div class="row">
-        <div class="mb-3 col-6">
+        <div class="mb-3 col-md-6">
           <label for="title" class="form-label">Title : </label>
           <input
             id="title"
@@ -15,7 +15,7 @@
             required
           />
         </div>
-        <div class="mb-3 col-6">
+        <div class="mb-3 col-md-6">
           <label for="bio" class="form-label">Bio : </label>
           <input
             id="bio"
@@ -38,7 +38,7 @@
         ></textarea>
       </div>
         <div class="row">
-          <div class="mb-3 col-5">
+          <div class="mb-3 col-md-5">
             <label for="price" class="form-label">Upload Image</label>
             <input
               id="price"
@@ -48,7 +48,7 @@
               placeholder="Paste Image URL here"
             />
         </div>
-        <div class="mb-3 col-7">
+        <div class="mb-3 col-md-7">
           <label for="category" class="form-label"> Add Country : </label>
         <!-- enum: ["city", "mountain", "beach", "forest", "desert", "castels", "house-boat", "amazing-pools", "farms", "island", "camping"], -->
           <select class="form-select" name="listing[category]" id="category">
@@ -80,7 +80,7 @@
         />
       </div>
       <div class="row">
-        <div class="mb-3 col-4">
+        <div class="mb-3 col-md-4">
           <label for="country" class="form-label"> Add Country : </label>
           <select class="form-select" name="listing[country]" id="country" required>
             <option value="">Select a country</option>
@@ -231,7 +231,7 @@
             <option value="Zimbabwe">Zimbabwe</option>
           </select>
         </div>
-        <div class="mb-3 col-8">
+        <div class="mb-3 col-md-8">
           <label for="location" class="form-label">Location <span style="color: gray; font-size: small;">(Dont add country name)</span> :</label>
           <input
             id="location"

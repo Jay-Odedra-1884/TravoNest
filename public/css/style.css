@@ -296,6 +296,8 @@ body {
   border-radius: 1rem;
 }
 
+
+
 .map-label-span{
   font-weight: bold;
 }
@@ -308,6 +310,17 @@ body {
   justify-content: center;
   align-items: start;
   margin-bottom: 40px;
+}
+
+@media (max-width: 768px) {
+  #map {
+    width: 100%;
+  }
+
+  .map-container {
+    left: 0;
+    align-items: center;
+  }
 }
 
 /* Location input in addNewListing form */
@@ -403,12 +416,33 @@ body {
   color: black;
 }
 
+@media (max-width: 768px) {
+  .filter-options {
+    width: 100%;
+  }
+
+  .filter-container {
+    flex-direction: column;
+  }
+}
+
 
 
 /* booking */
 
 .booking-card {
   border: none;
+}
+
+@media (max-width: 768px) {
+  .booking-card {
+    width: 100%;
+    margin: 0;
+  }
+
+  .card-img-top {
+    width: 100%;
+  }
 }
 
 

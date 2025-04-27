@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate') -%>
 <body>
-  <div class="d-flex justify-content-around">
+  <div class="d-flex flex-column flex-md-row justify-content-around">
     <div class="card booking-card">
       <img
         src="<%= data.image.url %>"
@@ -15,11 +15,12 @@
       <p>Categort : <%= data.category %></p>
       <p>Owner Contact : <%= data.owner.email %></p>
     </div>
-    <div class="w-50">
+    <hr class="d-md-none">
+    <div class="w-md-50 mb-3">
       <h3 class="mb-3">Booking Form</h3>
       <form action="/listing/<%= data._id %>/rooms" method="post" class="grid">
         <div class="row">
-          <div class="col-6">
+          <div class="col-md-6">
             <label for="checkin-date">Chek In :</label>
             <input
               type="date"
@@ -28,7 +29,7 @@
               id="checkin-date"
             />
           </div>
-          <div class="col-6">
+          <div class="col-md-6">
             <label for="checkout-date">Chek Out :</label>
             <input
               type="date"
@@ -49,7 +50,7 @@
           />
         </div>
         <div class="row mt-3">
-          <div class="col-6">
+          <div class="col-md-6">
             <label for="adults">Adults :</label>
             <input
               type="number"
@@ -58,7 +59,7 @@
               id="adults"
             />
           </div>
-          <div class="col-6">
+          <div class="col-md-6">
             <label for="adults">Children :</label>
             <input
               type="number"

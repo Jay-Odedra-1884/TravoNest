@@ -1,10 +1,10 @@
 <% layout('layouts/boilerplate') -%>
    <div class="row">
-    <div class="col-8 offset-2">
+    <div class="col-10 offset-1 col-md-8 offset-md-2">
         <form method="post" action="/listing/<%= data._id %>?_method=PUT" enctype="multipart/form-data">
             <h3 class="">Edit</h3>
             <div class="row">
-                <div class="mb-3 col-6">
+                <div class="mb-3 col-md-6">
                   <label for="title" class="form-label">Title : </label>
                   <input
                     id="title"
@@ -15,7 +15,7 @@
                     required
                   />
                 </div>
-                <div class="mb-3 col-6">
+                <div class="mb-3 col-md-6">
                   <label for="bio" class="form-label">Bio : </label>
                   <input
                     id="bio"
@@ -33,12 +33,12 @@
             <textarea id="description" class="form-control" name="listing[description]"><%= data.description %></textarea>
         </div>
         <div class="row">
-            <div class="mb-3 col-5">
+            <div class="mb-3 col-md-5">
                 <label for="image" class="form-label">Upload Image :
                 </label>
                 <input id="image" class="form-control" type="file" name="listing[image]">
             </div>
-            <div class="mb-3 col-7">
+            <div class="mb-3 col-md-7">
                 <label for="category" class="form-label"> Add Country : </label>
               <!-- enum: ["city", "mountain", "beach", "forest", "desert", "castels", "house-boat", "amazing-pools", "farms", "island", "camping"], -->
                
@@ -61,14 +61,14 @@
             <input id="price" class="form-control" type="number" name="listing[price]" value="<%= data.price %>" required>
         </div>
         <div class="row">
-            <div class="mb-3 col-4">
+            <div class="mb-3 col-md-4">
                 <label for="location" class="form-label">Location <span style="color: gray; font-size: small;">(Dont add country name)</span> :</label>
             </label>
                 <input id="location" class="form-control" type="text" name="listing[location]" value="<%= data.location %>" required>
           <ul id="suggestions" class="list-group" style="position:absolute; z-index:1000;"></ul>
                 
             </div>
-            <div class="mb-3 col-8">
+            <div class="mb-3 col-md-8">
                 <label for="country" class="form-label">
                     Add Country :            
                 </label>
