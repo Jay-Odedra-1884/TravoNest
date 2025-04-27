@@ -91,9 +91,12 @@
     }
 
     .navbar-login {
-        border-radius: 0.7rem;
-        width: fit-content;
-        height: fit-content;
+        border-radius: 0.5rem;
+    }
+
+    .navbar-logout {
+        padding: 5px 7px;
+        border-radius: 0.5rem;
     }
 
     .navbar-options-container-left {
@@ -104,6 +107,14 @@
         display: block;
         padding: 0;
         height: fit-content;
+    }
+
+    .dropdown-menu {
+        padding: 0;
+    }
+
+    .dropdown-toggle {
+        padding: 5px 7px;
     }
   }
 
