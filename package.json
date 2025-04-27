@@ -4,7 +4,9 @@
   "description": "A mix platform of Travel and Nest for a cozy feel.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "build": ""
   },
   "author": "Jay Odedra",
   "license": "ISC",

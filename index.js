@@ -125,6 +125,6 @@ const { error } = require("console");
     });
 
     //!server port-------||
-    app.listen(8080, () => {
+    app.listen(process.env.PORT, () => {
         console.log("Server startes at port : 8080 ");
     })
