@@ -34,7 +34,15 @@ module.exports.createListingForm = (req, res) => {
 };
 
 module.exports.createListing = async (req, res) => {
+  if (!req.body.listing) {
+  req.flash("error", "Form data is missing.");
+  return res.redirect("/listing");
+}
   let newData = new Listing(req.body.listing);
+  if (!req.file) {
+  req.flash("error", "Image upload failed. Try again.");
+  return res.redirect("/listing");
+  }
   let url = req.file.path;
   let filename = req.file.filename;
   newData.image = { url, filename };
