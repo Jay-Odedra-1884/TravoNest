@@ -63,7 +63,23 @@ module.exports.createListing = async (req, res) => {
         fullLocation
       )}`
     );
-    const geoData = await geoRes.json();
+
+    let geoData = [];
+    if (geoRes.ok) {
+      const contentType = geoRes.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        geoData = await geoRes.json();
+      } else {
+        // Log the HTML error for debugging
+        const errorText = await geoRes.text();
+        console.error('Geocoding API did not return JSON:', errorText);
+        req.flash("error", "Geocoding service error. Please try again later.");
+        return res.redirect("/listing");
+      }
+    } else {
+      req.flash("error", "Geocoding service unavailable. Please try again later.");
+      return res.redirect("/listing");
+    }
     const latitude = geoData[0]?.lat || 0;
     const longitude = geoData[0]?.lon || 0;
 
@@ -126,7 +142,23 @@ module.exports.updateLising = async (req, res) => {
       fullLocation
     )}`
   );
-  const geoData = await geoRes.json();
+
+  let geoData = [];
+  if (geoRes.ok) {
+    const contentType = geoRes.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      geoData = await geoRes.json();
+    } else {
+      // Log the HTML error for debugging
+      const errorText = await geoRes.text();
+      console.error('Geocoding API did not return JSON:', errorText);
+      req.flash("error", "Geocoding service error. Please try again later.");
+      return res.redirect("/listing");
+    }
+  } else {
+    req.flash("error", "Geocoding service unavailable. Please try again later.");
+    return res.redirect("/listing");
+  }
   const latitude = geoData[0]?.lat || 0;
   const longitude = geoData[0]?.lon || 0;
 
