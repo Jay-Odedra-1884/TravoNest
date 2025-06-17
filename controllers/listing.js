@@ -34,44 +34,51 @@ module.exports.createListingForm = (req, res) => {
 };
 
 module.exports.createListing = async (req, res) => {
-  if (!req.body.listing) {
-    if (req.xhr || req.headers.accept.indexOf('application/json') > -1) {
-      return res.status(400).json({ error: "Form data is missing." });
-    } else {
-      req.flash("error", "Form data is missing.");
-      return res.redirect("/listing");
+  try {
+    // If form data is missing
+    if (!req.body.listing) {
+      if (req.xhr || req.headers.accept.indexOf('application/json') > -1) {
+        return res.status(400).json({ error: "Form data is missing." });
+      } else {
+        req.flash("error", "Form data is missing.");
+        return res.redirect("/listing");
+      }
     }
-  }
-  let newData = new Listing(req.body.listing);
-  if (!req.file) {
-    if (req.xhr || req.headers.accept.indexOf('application/json') > -1) {
-      return res.status(400).json({ error: "Image upload failed. Try again." });
-    } else {
-      req.flash("error", "Image upload failed. Try again.");
-      return res.redirect("/listing");
+    let newData = new Listing(req.body.listing);
+    if (!req.file) {
+      if (req.xhr || req.headers.accept.indexOf('application/json') > -1) {
+        return res.status(400).json({ error: "Image upload failed. Try again." });
+      } else {
+        req.flash("error", "Image upload failed. Try again.");
+        return res.redirect("/listing");
+      }
     }
-  }
-  let url = req.file.path;
-  let filename = req.file.filename;
-  newData.image = { url, filename };
-  newData.owner = res.locals.currUser._id;
-  const fullLocation = `${newData.location}, ${newData.country}`;
-  const geoRes = await fetch(
-    `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
-      fullLocation
-    )}`
-  );
-  const geoData = await geoRes.json();
-  const latitude = geoData[0]?.lat || 0;
-  const longitude = geoData[0]?.lon || 0;
+    let url = req.file.path;
+    let filename = req.file.filename;
+    newData.image = { url, filename };
+    newData.owner = res.locals.currUser._id;
+    const fullLocation = `${newData.location}, ${newData.country}`;
+    const geoRes = await fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+        fullLocation
+      )}`
+    );
+    const geoData = await geoRes.json();
+    const latitude = geoData[0]?.lat || 0;
+    const longitude = geoData[0]?.lon || 0;
 
-  newData.coordinates = { latitude, longitude };
+    newData.coordinates = { latitude, longitude };
 
-  await newData.save();
-  if (req.xhr || req.headers.accept.indexOf('application/json') > -1) {
-    return res.status(200).json({ success: true, message: "New listing added successfully!" });
-  } else {
-    req.flash("success", "New listing added successfully!");
+    await newData.save();
+    if (req.xhr || req.headers.accept.indexOf('application/json') > -1) {
+      return res.status(200).json({ success: true, message: "New listing added successfully!" });
+    } else {
+      req.flash("success", "New listing added successfully!");
+      res.redirect("/listing");
+    }
+  } catch (err) {
+    console.error('Error in createListing:', err);
+    req.flash("error", "An unexpected error occurred.");
     res.redirect("/listing");
   }
 };
