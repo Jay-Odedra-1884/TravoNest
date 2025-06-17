@@ -35,13 +35,21 @@ module.exports.createListingForm = (req, res) => {
 
 module.exports.createListing = async (req, res) => {
   if (!req.body.listing) {
-  req.flash("error", "Form data is missing.");
-  return res.redirect("/listing");
-}
+    if (req.xhr || req.headers.accept.indexOf('application/json') > -1) {
+      return res.status(400).json({ error: "Form data is missing." });
+    } else {
+      req.flash("error", "Form data is missing.");
+      return res.redirect("/listing");
+    }
+  }
   let newData = new Listing(req.body.listing);
   if (!req.file) {
-  req.flash("error", "Image upload failed. Try again.");
-  return res.redirect("/listing");
+    if (req.xhr || req.headers.accept.indexOf('application/json') > -1) {
+      return res.status(400).json({ error: "Image upload failed. Try again." });
+    } else {
+      req.flash("error", "Image upload failed. Try again.");
+      return res.redirect("/listing");
+    }
   }
   let url = req.file.path;
   let filename = req.file.filename;
@@ -60,8 +68,12 @@ module.exports.createListing = async (req, res) => {
   newData.coordinates = { latitude, longitude };
 
   await newData.save();
-  req.flash("success", "New listing added successfully!");
-  res.redirect("/listing");
+  if (req.xhr || req.headers.accept.indexOf('application/json') > -1) {
+    return res.status(200).json({ success: true, message: "New listing added successfully!" });
+  } else {
+    req.flash("success", "New listing added successfully!");
+    res.redirect("/listing");
+  }
 };
 
 module.exports.showListing = async (req, res) => {
