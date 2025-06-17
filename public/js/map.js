@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Optional: Add a marker 
     L.marker([lat, lon])
       .addTo(map)
-      .bindPopup("Hi How are you? it's my home :)")
+      .bindPopup("Hi How are you? it's here :)")
       .openPopup();
   });
   

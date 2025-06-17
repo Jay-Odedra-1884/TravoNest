@@ -80,7 +80,7 @@ module.exports.updateLisingForm = async (req, res) => {
     req.flash("error", "Listing not found!");
     return res.redirect("/listing");
   }
-  res.render("listings/edit.ejs", { data, newUrl });
+  res.status(200).render("listings/edit.ejs", { data, newUrl });
 };
 
 module.exports.updateLising = async (req, res) => {
@@ -107,14 +107,14 @@ module.exports.updateLising = async (req, res) => {
   updatedListing.save();
 
   req.flash("success", "Listing updated successfully!");
-  res.redirect(`/listing/${id}`);
+  res.status(200).redirect(`/listing/${id}`);
 };
 
 module.exports.deleteListing = async (req, res) => {
   let { id } = req.params;
   await Listing.findByIdAndDelete(id);
   req.flash("success", "Listing deleted!");
-  res.redirect("/listing");
+  res.status(200).redirect("/listing");
 };
 
 //*for booking
@@ -123,9 +123,9 @@ module.exports.bookListingForm = async (req, res) => {
   let data = await Listing.findById(id).populate("owner");
   if (!data) {
     req.flash("error", "Listing not found!");
-    return res.redirect("/listing");
+    return res.status(404).redirect("/listing");
   }
-  res.render("listings/book.ejs", { data });
+  res.status(200).render("listings/book.ejs", { data });
 };
 
 module.exports.availableRooms = async (req, res) => {
@@ -155,7 +155,7 @@ module.exports.availableRooms = async (req, res) => {
 
   if (availableRooms.length === 0) {
     req.flash("error", "This listing rooms is not available for the selected dates!");
-    return res.redirect(`/listing/${id}/book`);
+    return res.status(200).redirect(`/listing/${id}/book`);
   }
 
   // let newBooking = {
@@ -206,7 +206,7 @@ module.exports.bookRoom = async (req, res) => {
   await room.bookings.push(newBooking._id);
   await room.save();
 
-  res.render("payment/success.ejs", { payment });
+  res.status(200).render("payment/success.ejs", { payment });
 };
 
 module.exports.showBookings = async(req, res) => {
@@ -228,7 +228,7 @@ module.exports.showBookings = async(req, res) => {
     return listing.rooms.some(room => room.bookings && room.bookings.length > 0);
   });
   
-  res.render("listings/myBookings.ejs", { 
+  res.status(200).render("listings/myBookings.ejs", { 
     bookingData,
     userId 
   });

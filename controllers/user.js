@@ -2,7 +2,7 @@ const express = require("express");
 const User = require("../models/user");
 
 module.exports.signUpForm = (req, res) => {
-    res.render("users/signup.ejs")
+    res.status(200).render("users/signup.ejs")
 };
 
 module.exports.signUp = async(req, res) => {
@@ -16,7 +16,7 @@ module.exports.signUp = async(req, res) => {
                 return next(err);
             }
             req.flash("success", "Welcome to Travonest");
-            res.redirect("/listing");
+            res.status(200).redirect("/listing");
         })
     } catch(e) {
         req.flash("error", e.message);
@@ -25,12 +25,12 @@ module.exports.signUp = async(req, res) => {
 };
 
 module.exports.loginForm = (req, res) => {
-    res.render("users/login.ejs");
+    res.status(200).render("users/login.ejs");
 };
 
 module.exports.login = async(req, res) => {
     req.flash("success", "Welcome back to Travonest");
-    res.redirect(res.locals.redirectUrl || "/listing");
+    res.status(200).redirect(res.locals.redirectUrl || "/listing");
 };
 
 module.exports.logout = (req, res) => { 
@@ -39,6 +39,6 @@ module.exports.logout = (req, res) => {
             return next(err);
         }
         req.flash("success", "You logged out!");
-        res.redirect("/listing");
+        res.status(200).redirect("/listing");
     })
 };
