@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": "22.6.0"
+  },
   "name": "travonest",
   "version": "1.0.0",
   "description": "A mix platform of Travel and Nest for a cozy feel.",
