@@ -58,11 +58,20 @@ module.exports.createListing = async (req, res) => {
     newData.image = { url, filename };
     newData.owner = res.locals.currUser._id;
     const fullLocation = `${newData.location}, ${newData.country}`;
+    // const geoRes = await fetch(
+    //   `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+    //     fullLocation
+    //   )}`
+    // );
+
     const geoRes = await fetch(
-      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
-        fullLocation
-      )}`
-    );
+  `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullLocation)}`,
+  {
+    headers: {
+      'User-Agent': 'RentRideApp/1.0 (your-email@example.com)'
+    }
+  }
+);
 
     let geoData = [];
     if (geoRes.ok) {
