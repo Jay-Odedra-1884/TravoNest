@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const lat = parseFloat(document.querySelector('script').textContent.match(/lat = "([^"]*)"/)?.[1] || '');
     const lon = parseFloat(document.querySelector('script').textContent.match(/lon = "([^"]*)"/)?.[1] || '');
     
-    // Check if coordinates are valid numbers
+    // Check if coordinates are valid numbers and not null/empty
     if (lat && lon && !isNaN(lat) && !isNaN(lon) && lat !== 0 && lon !== 0) {
       try {
         // Try to initialize the map
@@ -36,48 +36,35 @@ document.addEventListener("DOMContentLoaded", () => {
           .openPopup();
           
       } catch (error) {
-        // If map initialization fails, show fallback
-        showFallbackMessage(mapContainer);
+        // If map initialization fails, show simple message
+        showSimpleMessage(mapContainer);
       }
     } else {
-      // If no valid coordinates, show fallback
-      showFallbackMessage(mapContainer);
+      // If no valid coordinates, show simple message
+      showSimpleMessage(mapContainer);
     }
   }
 });
 
-function showFallbackMessage(mapContainer) {
+function showSimpleMessage(mapContainer) {
   // Get location information if available
   const locationElement = document.querySelector('.listing-location');
   const locationText = locationElement ? locationElement.textContent : 'Location information';
   
-  // Replace the map with a beautiful fallback message
+  // Show a simple message instead of the complex fallback
   mapContainer.innerHTML = `
-    <div class="map-fallback">
-      <div class="fallback-content">
-        <div class="fallback-icon">
+    <div class="map-simple-message">
+      <div class="simple-message-content">
+        <div class="simple-message-icon">
           <i class="fa-solid fa-map-location-dot"></i>
         </div>
-        <h3 class="fallback-title">Location Services Temporarily Unavailable</h3>
-        <p class="fallback-message">
-          We're currently experiencing issues with our geocoding service in deployment. 
-          We're working to restore location mapping functionality as soon as possible.
+        <h4 class="simple-message-title">Location Service Temporarily Down</h4>
+        <p class="simple-message-text">
+          Our location service is currently unavailable. Developers are working on it.
         </p>
-        <div class="fallback-location-info">
-          <div class="location-detail">
-            <i class="fa-solid fa-location-dot"></i>
-            <span>Location: <strong>${locationText}</strong></span>
-          </div>
-          <div class="location-detail">
-            <i class="fa-solid fa-info-circle"></i>
-            <span>Please contact the host for specific directions</span>
-          </div>
-        </div>
-        <div class="fallback-status">
-          <div class="status-indicator">
-            <div class="status-dot"></div>
-            <span>Service Status: Maintenance</span>
-          </div>
+        <div class="simple-address">
+          <i class="fa-solid fa-location-dot"></i>
+          <span><strong>Address:</strong> ${locationText}</span>
         </div>
       </div>
     </div>

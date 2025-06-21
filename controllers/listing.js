@@ -35,7 +35,6 @@ module.exports.createListingForm = (req, res) => {
 
 module.exports.createListing = async (req, res) => {
   try {
-    // If form data is missing
     if (!req.body.listing) {
       if (req.xhr || req.headers.accept.indexOf('application/json') > -1) {
         return res.status(400).json({ error: "Form data is missing." });
@@ -59,53 +58,39 @@ module.exports.createListing = async (req, res) => {
     newData.owner = res.locals.currUser._id;
     const fullLocation = `${newData.location}, ${newData.country}`;
 
-    //*old
-    const geoRes = await fetch(
-      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
-        fullLocation
-      )}`
-    );
+    // Try to get coordinates from geocoding API
+    try {
+      const geoRes = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+          fullLocation
+        )}`
+      );
 
-    //*new
-//     const geoRes = await fetch(
-//   `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(fullLocation)}&key=${process.env.OPENCAGE_API_KEY}`
-// );
-
-  //*new
-  // let geoData = await geoRes.json();
-
-  // if (!geoData.results || geoData.results.length === 0) {
-  // req.flash("error", "Location not found.");
-  // return res.redirect("/admin");
-  // }
-
-  //*old
-  let geoData = [];
-    if (geoRes.ok) {
-      const contentType = geoRes.headers.get('content-type');
-      if (contentType && contentType.includes('application/json')) {
-        geoData = await geoRes.json();
-      } else {
-        // Log the HTML error for debugging
-        const errorText = await geoRes.text();
-        console.error('Geocoding API did not return JSON:', errorText);
-        req.flash("error", "Geocoding service error. Please try again later.");
-        return res.redirect("/listing");
+      let geoData = [];
+      if (geoRes.ok) {
+        const contentType = geoRes.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          geoData = await geoRes.json();
+        }
       }
-    } else {
-      req.flash("error", "Geocoding service unavailable. Please try again later.");
-      return res.redirect("/listing");
+      
+      if (geoData && geoData.length > 0) {
+        const latitude = parseFloat(geoData[0]?.lat) || 0;
+        const longitude = parseFloat(geoData[0]?.lon) || 0;
+        
+        if (latitude !== 0 && longitude !== 0) {
+          newData.coordinates = { latitude, longitude };
+        } else {
+          newData.coordinates = null;
+        }
+      } else {
+        newData.coordinates = null;
+      }
+    } catch (geocodingError) {
+      console.error('Geocoding API error:', geocodingError);
+      // Set coordinates to null when geocoding fails
+      newData.coordinates = null;
     }
-    const latitude = geoData[0]?.lat || 0;
-    const longitude = geoData[0]?.lon || 0;
-
-    //*new
-    // const topResult = geoData.results[0];
-    // const latitude = topResult.geometry.lat;
-    // const longitude = topResult.geometry.lng;
-
-
-    newData.coordinates = { latitude, longitude };
 
     await newData.save();
     if (req.xhr || req.headers.accept.indexOf('application/json') > -1) {
@@ -159,32 +144,41 @@ module.exports.updateLising = async (req, res) => {
   }
 
   const fullLocation = `${req.body.listing.location}, ${req.body.listing.country}`;
-  const geoRes = await fetch(
-    `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
-      fullLocation
-    )}`
-  );
+  
+  // Try to get coordinates from geocoding API
+  try {
+    const geoRes = await fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+        fullLocation
+      )}`
+    );
 
-  let geoData = [];
-  if (geoRes.ok) {
-    const contentType = geoRes.headers.get('content-type');
-    if (contentType && contentType.includes('application/json')) {
-      geoData = await geoRes.json();
-    } else {
-      // Log the HTML error for debugging
-      const errorText = await geoRes.text();
-      console.error('Geocoding API did not return JSON:', errorText);
-      req.flash("error", "Geocoding service error. Please try again later.");
-      return res.redirect("/listing");
+    let geoData = [];
+    if (geoRes.ok) {
+      const contentType = geoRes.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        geoData = await geoRes.json();
+      }
     }
-  } else {
-    req.flash("error", "Geocoding service unavailable. Please try again later.");
-    return res.redirect("/listing");
+    
+    if (geoData && geoData.length > 0) {
+      const latitude = parseFloat(geoData[0]?.lat) || 0;
+      const longitude = parseFloat(geoData[0]?.lon) || 0;
+      
+      if (latitude !== 0 && longitude !== 0) {
+        updatedListing.coordinates = { latitude, longitude };
+      } else {
+        updatedListing.coordinates = null;
+      }
+    } else {
+      updatedListing.coordinates = null;
+    }
+  } catch (geocodingError) {
+    console.error('Geocoding API error:', geocodingError);
+    // Set coordinates to null when geocoding fails
+    updatedListing.coordinates = null;
   }
-  const latitude = geoData[0]?.lat || 0;
-  const longitude = geoData[0]?.lon || 0;
 
-  updatedListing.coordinates = { latitude, longitude };
   updatedListing.save();
 
   req.flash("success", "Listing updated successfully!");

@@ -37,8 +37,8 @@ const listingSchema = mongoose.Schema({
   location: String,
   country: String,
   coordinates: {
-    latitude: Number,
-    longitude: Number,
+    latitude: { type: Number, default: null },
+    longitude: { type: Number, default: null },
   },
   reviews: [
     {
