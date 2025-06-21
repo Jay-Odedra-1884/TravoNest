@@ -58,22 +58,29 @@ module.exports.createListing = async (req, res) => {
     newData.image = { url, filename };
     newData.owner = res.locals.currUser._id;
     const fullLocation = `${newData.location}, ${newData.country}`;
-    // const geoRes = await fetch(
-    //   `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
-    //     fullLocation
-    //   )}`
-    // );
 
+    //*old
     const geoRes = await fetch(
-  `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullLocation)}`,
-  {
-    headers: {
-      'User-Agent': 'RentRideApp/1.0 (your-email@example.com)'
-    }
-  }
-);
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+        fullLocation
+      )}`
+    );
 
-    let geoData = [];
+    //*new
+//     const geoRes = await fetch(
+//   `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(fullLocation)}&key=${process.env.OPENCAGE_API_KEY}`
+// );
+
+  //*new
+  // let geoData = await geoRes.json();
+
+  // if (!geoData.results || geoData.results.length === 0) {
+  // req.flash("error", "Location not found.");
+  // return res.redirect("/admin");
+  // }
+
+  //*old
+  let geoData = [];
     if (geoRes.ok) {
       const contentType = geoRes.headers.get('content-type');
       if (contentType && contentType.includes('application/json')) {
@@ -91,6 +98,12 @@ module.exports.createListing = async (req, res) => {
     }
     const latitude = geoData[0]?.lat || 0;
     const longitude = geoData[0]?.lon || 0;
+
+    //*new
+    // const topResult = geoData.results[0];
+    // const latitude = topResult.geometry.lat;
+    // const longitude = topResult.geometry.lng;
+
 
     newData.coordinates = { latitude, longitude };
 
