@@ -97,12 +97,12 @@ module.exports.createListing = async (req, res) => {
       return res.status(200).json({ success: true, message: "New listing added successfully!" });
     } else {
       req.flash("success", "New listing added successfully!");
-      res.redirect("/listing");
+      res.redirect("/admin");
     }
   } catch (err) {
     console.error('Error in createListing:', err);
     req.flash("error", "An unexpected error occurred.");
-    res.redirect("/listing");
+    res.redirect("/admin");
   }
 };
 

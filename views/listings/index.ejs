@@ -118,7 +118,10 @@
       </div>
     </div>
     <div class="row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-1 mt-3">
-      <% for(let data of datas) { %>
+     <% if(datas.length === 0) { %>
+      <p class="no-listing-msg">Opps! Sorry no listing available :(</p>
+      <% } else { %>
+         <% for(let data of datas) { %>
       <a href="/listing/<%= data._id %>" class="card-link">
         <div class="card listing-card">
           <img
@@ -141,6 +144,7 @@
         </div>
       </a>
       <% } %>
+        <% } %>
     </div>
   </div>
 </body>
